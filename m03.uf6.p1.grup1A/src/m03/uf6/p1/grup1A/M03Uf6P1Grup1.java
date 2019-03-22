@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package m03.uf6.p1.grup1;
+package m03.uf6.p1.grup1A;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
