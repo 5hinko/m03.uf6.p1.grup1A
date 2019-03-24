@@ -5,6 +5,7 @@
  */
 package m03.uf6.p1.grup1A;
 
+import Vista.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
