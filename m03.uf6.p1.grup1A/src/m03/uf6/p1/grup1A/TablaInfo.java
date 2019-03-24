@@ -12,9 +12,19 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -23,34 +33,8 @@ import javax.swing.table.TableModel;
  */
 public class TablaInfo extends JFrame {
 
-    public enum enumTablas {
-        Metge(0),
-        Pacient(1),
-        Visita(2),
-        Malaltia(3);
-
-        private int num;
-
-        enumTablas(int num) {
-            this.num = num;
-        }
-
-        public int getNum() {
-            return num;
-        }
-
-        public static enumTablas getEnum(int num) {
-            for (enumTablas tabla : enumTablas.values()) {
-                if (tabla.getNum() == num) {
-                    return tabla;
-                }
-            }
-            return null;
-        }
-
-    }
-    private int itemCheck;
-    private final enumTablas listObject[] = enumTablas.values();
+    public static int itemCheck;
+    private final EnumTablas listObject[] = EnumTablas.values();
 
     TablaInfo(int num) {
         itemCheck = num;
@@ -58,24 +42,12 @@ public class TablaInfo extends JFrame {
         creaComponents();
         accionListener();
 
-        TableModel modelBuit = new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null}
-                },
-                new String[]{
-                    "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-        );
-        jTablaInfo.setModel(modelBuit);
     }
 
     private JPanel jPrincipal;
     private JPanel jPanel;
     private JPanel jPanelConf;
-    private JTextField jTxtField;
+    private JTextField jTxtFieldBusca;
     private JLabel jTitol;
     private JButton jBtnInsert;
     private JButton jBtnBusca;
@@ -146,16 +118,16 @@ public class TablaInfo extends JFrame {
         jPrincipal.add(jPanel, BorderLayout.CENTER);
 
         //3r Row
-        jTxtField = new JTextField();
+        jTxtFieldBusca = new JTextField();
         jBtnBusca = new JButton("Search");
         jBtnInsert = new JButton("Insert");
 
-        jTxtField.setText("");
-        jTxtField.setColumns(20);
+        jTxtFieldBusca.setText("");
+        jTxtFieldBusca.setColumns(20);
 
         jPanelConf = new JPanel(new FlowLayout());
 
-        jPanelConf.add(jTxtField);
+        jPanelConf.add(jTxtFieldBusca);
         jPanelConf.add(jBtnBusca);
 
         jPanel = new JPanel(new BorderLayout());
@@ -169,23 +141,198 @@ public class TablaInfo extends JFrame {
 
     private void accionListener() {
 
-        insertItemToComboBox();
+        cambiosEnComboBox();
 
+        //
+        jTablaInfo.getModel().addTableModelListener(new TableModelListener() {
+
+            private int fila;
+            private PreparedStatement sentencia = null;
+            private Connection con = null;
+            private TableModel dades;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                fila = e.getFirstRow();
+                dades = jTablaInfo.getModel();
+                try {
+                    con = Connexion.getConnection();
+                    updateQuery();
+                    sentencia.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaInfo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            private void updateQuery() {
+                try {
+                    EnumTablas tablaEnum = EnumTablas.getEnum(itemCheck);
+                    String consulta;
+                    switch (tablaEnum) {
+                        case Malalties:
+                            consulta = "UPDATE " + tablaEnum + " SET nom = ?, causaBaixa = ?, tratamiento = ?, duradaTratamentDies = ? WHERE codi = ?";
+                            sentencia = con.prepareStatement(consulta);
+                            sentencia.setString(1, (String) (dades.getValueAt(fila, 1)));
+                            sentencia.setInt(2, Integer.parseInt(dades.getValueAt(fila, 2).toString()));
+                            sentencia.setString(3, (String) (dades.getValueAt(fila, 3)));
+                            sentencia.setInt(4, Integer.parseInt(dades.getValueAt(fila, 4).toString()));
+                            sentencia.setInt(5, Integer.parseInt(dades.getValueAt(fila, 0).toString()));
+                            break;
+                        case Visita:
+                            consulta = "UPDATE " + tablaEnum + " SET dataVisita = ?, nomMalaltia = ?, dniPacient = ? , dniMetges = ? WHERE";
+                            sentencia = con.prepareStatement(consulta);
+                            sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
+                            sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
+                            sentencia.setString(3, (String) (dades.getValueAt(fila, 2)));
+                            sentencia.setString(4, (String) (dades.getValueAt(fila, 3)));
+                            break;
+                        case Pacients:
+                            consulta = "UPDATE " + tablaEnum + " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ? WHERE DNI = ?";
+                            sentencia = con.prepareStatement(consulta);
+                            sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
+                            sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
+                            sentencia.setString(3, (String) (dades.getValueAt(fila, 2)));
+                            sentencia.setString(4, (String) (dades.getValueAt(fila, 4)));
+                            sentencia.setString(5, (String) (dades.getValueAt(fila, 5)));
+                            sentencia.setString(6, (String) (dades.getValueAt(fila, 3)));
+                            break;
+                        case Metges:
+                            consulta = "UPDATE " + tablaEnum + " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ?, numEmpleat = ?, codiCC= ?, salariMensual = ? WHERE DNI = ?";
+                            sentencia = con.prepareStatement(consulta);
+                            sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
+                            sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
+                            sentencia.setString(3, (String) (dades.getValueAt(fila, 2)));
+                            sentencia.setString(4, (String) (dades.getValueAt(fila, 4)));
+                            sentencia.setString(5, (String) (dades.getValueAt(fila, 5)));
+                            sentencia.setInt(6, Integer.parseInt(dades.getValueAt(fila, 6).toString()));
+                            sentencia.setString(7, (String) (dades.getValueAt(fila, 7)));
+                            sentencia.setInt(8, Integer.parseInt(dades.getValueAt(fila, 8).toString()));
+                            sentencia.setString(9, (String) (dades.getValueAt(fila, 3)));
+
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaInfo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        //Cambio en la lista
         jCombo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Comienza en 1
-                itemCheck = enumTablas.valueOf(jCombo.getSelectedItem().toString()).getNum();
+                itemCheck = EnumTablas.valueOf(jCombo.getSelectedItem().toString()).getNum();
+                cambiosEnComboBox();
+            }
+        });
 
-                insertItemToComboBox();
+        //Busca
+        jBtnBusca.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String sQuery = jTxtFieldBusca.getText().toString();
+                if (sQuery.length() > 0) {
+                    ResultSet resultat = selectQuery(sQuery);
+                    TableModel model = new ModeloDeTablaSimple(resultat);
+                    actualitzaTaula(jTablaInfo, model);
+                } else {
+                    cambiosEnComboBox();
+                }
+            }
+
+            private ResultSet selectQuery(String sQuery) {
+                ResultSet resultat;
+                try {
+                    EnumTablas tablaEnum = EnumTablas.getEnum(itemCheck);
+                    switch (tablaEnum) {
+                        case Malalties:
+                            resultat = consultaBBDD(
+                                    "SELECT * "
+                                    + " FROM " + tablaEnum
+                                    + " WHERE codi = " + sQuery + " OR "
+                                    + "nom LIKE '" + sQuery + "' OR "
+                                    + "tratamiento LIKE '" + sQuery + "' OR "
+                                    + "duradaTratamentDies = " + sQuery
+                            );
+                            break;
+                        case Visita:
+                            resultat = consultaBBDD(
+                                    "SELECT * "
+                                    + " FROM " + tablaEnum
+                                    + " WHERE dataVisita LIKE '" + sQuery + "' OR "
+                                    + "nomMalaltia LIKE '" + sQuery + "' OR "
+                                    + "dniPacient LIKE '" + sQuery + "' OR "
+                                    + "dniMetges LIKE '" + sQuery + "'"
+                            );
+                            break;
+                        default:
+                            resultat = consultaBBDD(
+                                    "SELECT * "
+                                    + " FROM " + tablaEnum
+                                    + " WHERE nom LIKE '" + sQuery + "' OR "
+                                    + "cognom1 LIKE '" + sQuery + "' OR "
+                                    + "cognom2 LIKE '" + sQuery + "' OR "
+                                    + "cognomDNI LIKE '" + sQuery + "' OR "
+                                    + "numSS LIKE '" + sQuery + "'"
+                            );
+                            break;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaInfo.class.getName()).log(Level.SEVERE, null, ex);
+                    resultat = null;
+                }
+                return resultat;
+            }
+        });
+
+        //Insert
+        jBtnInsert.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Nuevo para crear
+                CreaNuevo frame = new CreaNuevo();
+                frame.setVisible(true);
             }
         });
     }
 
-    private void insertItemToComboBox() {
+    private ResultSet consultaBBDD(String consultaSQL) throws SQLException {
+
+        Connection con = null;
+        Statement sentencia = null;
+        ResultSet resultat = null;
+        try {
+            con = Connexion.getConnection();
+            sentencia = con.createStatement();
+            sentencia.executeQuery(consultaSQL);
+            resultat = sentencia.getResultSet();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultat;
+    }
+
+    private void actualitzaTaula(JTable taula, TableModel model) {
+        taula.setModel(model);
+        /*
+        RenderizadorCeldas renderizador = new RenderizadorCeldas();
+        for (int i = 0; i < taula.getColumnCount(); i++) {
+            taula.getColumnModel().getColumn(i).setCellRenderer(renderizador);
+        }*/
+        // Nom mostrarem la columna id a la taula, però la necessitem per fer el update
+        // si editem un camp
+        TableColumnModel tcm = taula.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(0));
+    }
+
+    private void cambiosEnComboBox() {
         jCombo.removeAllItems();
 
-        jCombo.addItem(enumTablas.getEnum(itemCheck));
+        jCombo.addItem(EnumTablas.getEnum(itemCheck));
         for (int i = 0; i < listObject.length; i++) {
             if (i == itemCheck) {
                 jTitol.setText("Gestió " + listObject[i]);
@@ -195,6 +342,16 @@ public class TablaInfo extends JFrame {
             }
         }
 
+        try {
+            ResultSet resultat = consultaBBDD(
+                    "SELECT * "
+                    + " FROM " + EnumTablas.getEnum(itemCheck));
+            TableModel model = new ModeloDeTablaSimple(resultat);
+
+            actualitzaTaula(jTablaInfo, model);
+        } catch (SQLException ex) {
+            Logger.getLogger(TablaInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void main(String[] args) {
