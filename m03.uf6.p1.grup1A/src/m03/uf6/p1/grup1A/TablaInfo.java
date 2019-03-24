@@ -22,15 +22,15 @@ import javax.swing.table.TableModel;
  * @author Cho_S
  */
 public class TablaInfo extends JFrame {
-    
+
     private int itemCheck;
-    
+
     TablaInfo(int num) {
         itemCheck = num;
-        
+
         creaComponents();
         accionListener();
-        
+
         TableModel modelBuit = new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                     {null, null, null, null},
@@ -44,7 +44,7 @@ public class TablaInfo extends JFrame {
         );
         jTablaInfo.setModel(modelBuit);
     }
-    
+
     private JPanel jPrincipal;
     private JPanel jPanel;
     private JPanel jPanelConf;
@@ -55,22 +55,22 @@ public class TablaInfo extends JFrame {
     private JComboBox jCombo;
     private JTable jTablaInfo;
     private JScrollPane jScroll;
-    
+
     private void creaComponents() {
         setDefaultLookAndFeelDecorated(true);
         setTitle("Gestió Hospital");
         setLayout(new FlowLayout());
-        
+
         try {
             //UIManager.setLookAndFeel("javax.swing.plat.metal.MetalLookAndFeel");
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         int numBorder;
         numBorder = 20;
-        
+
         jPrincipal = new JPanel(new BorderLayout());
         jPrincipal.setBorder(new EmptyBorder(numBorder, numBorder, numBorder, numBorder));
         add(jPrincipal);
@@ -78,19 +78,19 @@ public class TablaInfo extends JFrame {
         //1r Row
         jTitol = new JLabel("Titol");
         jCombo = new JComboBox();
-        
+
         jPanel = new JPanel(new GridLayout(1, 0));
-        
+
         jTitol.setHorizontalAlignment(JLabel.CENTER);
         jTitol.setFont(new Font("Serif", Font.PLAIN, 20));
-        
+
         jCombo.addItem("Item 1");
         jCombo.addItem("Item 2");
-        
+
         jPanel.add(new JLabel(""));
         jPanel.add(jTitol);
         jPanel.add(jCombo);
-        
+
         jPrincipal.add(jPanel, BorderLayout.NORTH);
 
         //2n Row
@@ -98,9 +98,9 @@ public class TablaInfo extends JFrame {
         jScroll = new JScrollPane(jTablaInfo,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
+
         jScroll.setPreferredSize(new Dimension(720, 300));
-        
+
         jTablaInfo.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                     {null, null, null, null},
@@ -122,53 +122,54 @@ public class TablaInfo extends JFrame {
         jTxtField = new JTextField();
         jBtnBusca = new JButton("Search");
         jBtnInsert = new JButton("Insert");
-        
+
         jTxtField.setText("");
         jTxtField.setColumns(20);
-        
+
         jPanelConf = new JPanel(new FlowLayout());
-        
+
         jPanelConf.add(jTxtField);
         jPanelConf.add(jBtnBusca);
-        
+
         jPanel = new JPanel(new BorderLayout());
         jPanel.add(jPanelConf, BorderLayout.WEST);
         jPanel.add(jBtnInsert, BorderLayout.EAST);
-        
+
         jPrincipal.add(jPanel, BorderLayout.SOUTH);
-        
+
         pack();
     }
-    
+
     private void accionListener() {
-        
+
         insertItemToComboBox();
-        
+
         jCombo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Comienza en 1
-                itemCheck = jCombo.getSelectedIndex()-1;
+                itemCheck = jCombo.getSelectedIndex() - 1;
                 insertItemToComboBox();
             }
         });
     }
-    
+
     private void insertItemToComboBox() {
         jCombo.removeAllItems();
         String listObject[] = {"Metge", "Pacient", "Visita", "Malaltia"};
-        
+
         jCombo.addItem(listObject[itemCheck]);
         for (int i = 0; i < listObject.length; i++) {
             if (i == itemCheck) {
                 jTitol.setText("Gestió " + listObject[i]);
                 //jCombo.addItem(listObject[i]);
+            } else {
+                jCombo.addItem(listObject[i]);
             }
-            jCombo.addItem(listObject[i]);
         }
-        
+
     }
-    
+
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -179,5 +180,5 @@ public class TablaInfo extends JFrame {
             }
         });
     }
-    
+
 }
