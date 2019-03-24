@@ -44,9 +44,13 @@ public class MenuInici extends JFrame {
     private JButton jBtnMalalties;
     private JButton jBtnVisitas;
 
+    private ImageIcon imageIcon;
+    private Image newimg;
+    private JLabel img;
+
     private void creaComponents() {
         setTitle("Gestió Hospital");
-
+        setDefaultLookAndFeelDecorated(true);
         try {
             //UIManager.setLookAndFeel("javax.swing.plat.metal.MetalLookAndFeel");
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -74,10 +78,10 @@ public class MenuInici extends JFrame {
 
         jOpciones = new JPanel(new FlowLayout());
 
-        ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/Imagenes/patientIcon.jpg"));
-        Image newimg = imageIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(this.getClass().getResource("/Imagenes/patientIcon.jpg"));
+        newimg = imageIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
-        JLabel img = new JLabel(imageIcon);
+        img = new JLabel(imageIcon);
 
         numBorder = 10;
         EmptyBorder borderBtn = new EmptyBorder(numBorder, numBorder, numBorder, numBorder);
@@ -114,7 +118,7 @@ public class MenuInici extends JFrame {
 
         jBtnVisitas = new JButton("Gestió Visitas");
         jBtnVisitas.setBorder(borderBtn);
-        
+
         imageIcon = new ImageIcon(this.getClass().getResource("/Imagenes/visitaIcon.png"));
         newimg = imageIcon.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
@@ -133,35 +137,32 @@ public class MenuInici extends JFrame {
         jBtnPacients.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                TablaInfo frame = new TablaInfo(1);
+                frame.setVisible(true);
             }
         });
         jBtnMetges.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                TablaInfo frame = new TablaInfo(0);
+                frame.setVisible(true);
             }
         });
         jBtnMalalties.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                TablaInfo frame = new TablaInfo(3);
+                frame.setVisible(true);
             }
         });
         jBtnVisitas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                TablaInfo frame = new TablaInfo(2);
+                frame.setVisible(true);
             }
         });
 
-        TablaInfo frame = new TablaInfo();
-        frame.setVisible(true);
-        frame.setDefaultLookAndFeelDecorated(true);
     }
 
     public static void main(String[] args) {
@@ -170,7 +171,6 @@ public class MenuInici extends JFrame {
             public void run() {
                 MenuInici frame = new MenuInici();
                 frame.setVisible(true);
-                frame.setDefaultLookAndFeelDecorated(true);
             }
         });
     }
