@@ -23,7 +23,34 @@ import javax.swing.table.TableModel;
  */
 public class TablaInfo extends JFrame {
 
+    public enum enumTablas {
+        Metge(0),
+        Pacient(1),
+        Visita(2),
+        Malaltia(3);
+
+        private int num;
+
+        enumTablas(int num) {
+            this.num = num;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public static enumTablas getEnum(int num) {
+            for (enumTablas tabla : enumTablas.values()) {
+                if (tabla.getNum() == num) {
+                    return tabla;
+                }
+            }
+            return null;
+        }
+
+    }
     private int itemCheck;
+    private final enumTablas listObject[] = enumTablas.values();
 
     TablaInfo(int num) {
         itemCheck = num;
@@ -148,7 +175,8 @@ public class TablaInfo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Comienza en 1
-                itemCheck = jCombo.getSelectedIndex() - 1;
+                itemCheck = enumTablas.valueOf(jCombo.getSelectedItem().toString()).getNum();
+
                 insertItemToComboBox();
             }
         });
@@ -156,9 +184,8 @@ public class TablaInfo extends JFrame {
 
     private void insertItemToComboBox() {
         jCombo.removeAllItems();
-        String listObject[] = {"Metge", "Pacient", "Visita", "Malaltia"};
 
-        jCombo.addItem(listObject[itemCheck]);
+        jCombo.addItem(enumTablas.getEnum(itemCheck));
         for (int i = 0; i < listObject.length; i++) {
             if (i == itemCheck) {
                 jTitol.setText("Gestió " + listObject[i]);
