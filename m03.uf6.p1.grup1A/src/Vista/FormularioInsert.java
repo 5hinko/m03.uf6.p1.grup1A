@@ -1,18 +1,9 @@
 package Vista;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -21,36 +12,37 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class FormularioInsert extends JFrame {
 
-    public static JFrame JFwindow;
-    public static GridBagConstraints c;
-    public static JPanel jPrincipal;
-    public static JPanel JPcontent;
-    public static JButton JBtnCrea;
-    public static JButton jBtnCancelar;
+    public JFrame JFwindow;
+    public GridBagConstraints c;
+    public JPanel jPrincipal;
+    public JPanel JPcontent;
+    public JButton JBtnCrea;
+    public JButton jBtnCancelar;
 
-    public static JTextField JTxtFldNom;
-    public static JTextField JTxtFldPrimerCognom;
-    public static JTextField JTxtFldSegonCognom;
-    public static JTextField JTxtFldNumeroSS;
-    public static JTextField JTxtFldNIF;
-    public static JTextField JTxtFldTelf;
-    public static JTextField JTxtFldCodiPostal;
-    public static JTextField JTxtFldCiutat;
-    public static JTextField JTxtFldCarrer;
-    public static JTextField JTxtFldNumero;
-    public static JTextField JTxtFldPlanta;
-    public static JTextField JTxtFldPorta;
+    public JTextField JTxtFldNom;
+    public JTextField JTxtFldPrimerCognom;
+    public JTextField JTxtFldSegonCognom;
+    public JTextField JTxtFldNumeroSS;
+    public JTextField JTxtFldNIF;
+    public JTextField JTxtFldTelf;
+    public JTextField JTxtFldCodiPostal;
+    public JTextField JTxtFldCiutat;
+    public JTextField JTxtFldCarrer;
+    public JTextField JTxtFldNumero;
+    public JTextField JTxtFldPlanta;
+    public JTextField JTxtFldPorta;
 
-    public static JTextField JTxtFldSalariMensual;
-    public static JTextField JTxtFldNumEmpleat;
-    public static JTextField JTxtFldCompteCorrent;
+    public JTextField JTxtFldSalariMensual;
+    public JTextField JTxtFldNumEmpleat;
+    public JTextField JTxtFldCompteCorrent;
 
-    public static String[] data;
-    public static int modus;
+    public String[] data;
+    public int modus;
 
     public FormularioInsert() {
         crearComponentes();
@@ -65,7 +57,7 @@ public class FormularioInsert extends JFrame {
         try {
             //UIManager.setLookAndFeel("javax.swing.plat.metal.MetalLookAndFeel");
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println(e.getMessage());
         }
 
@@ -174,19 +166,19 @@ public class FormularioInsert extends JFrame {
         JTxtFldNumEmpleat.addComponentListener(null);
         numEmpleat.add(JTxtFldNumEmpleat);
 
-        JPanel salariMensual = new JPanel();
-        JPcontent.add(salariMensual);
-        salariMensual.add(new JLabel("Salari menusal:    "));
-        JTxtFldSalariMensual = new JTextField(22);
-        JTxtFldSalariMensual.addComponentListener(null);
-        salariMensual.add(JTxtFldSalariMensual);
-
         JPanel compteCorrent = new JPanel();
         JPcontent.add(compteCorrent);
         compteCorrent.add(new JLabel("Compte corrent:  "));
         JTxtFldCompteCorrent = new JTextField(22);
         JTxtFldCompteCorrent.addComponentListener(null);
         compteCorrent.add(JTxtFldCompteCorrent);
+        
+        JPanel salariMensual = new JPanel();
+        JPcontent.add(salariMensual);
+        salariMensual.add(new JLabel("Salari menusal:    "));
+        JTxtFldSalariMensual = new JTextField(22);
+        JTxtFldSalariMensual.addComponentListener(null);
+        salariMensual.add(JTxtFldSalariMensual);
     }
 
     public static void main(String[] args) {
