@@ -295,7 +295,7 @@ public class TablaInfo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Nuevo para crear
-                CreaNuevo frame = new CreaNuevo();
+                CreaNuevo frame = new CreaNuevo(itemCheck);
                 frame.setVisible(true);
             }
         });

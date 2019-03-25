@@ -1,5 +1,6 @@
 package Vista;
 
+import Controlador.BotonesCrearPersona;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -50,9 +51,11 @@ public class FormularioInsert extends JFrame {
     public static JTextField JTxtFldCompteCorrent;
 
     public static String[] data;
-    public static int modus;
+    //Clase es el ENUM de las clases.
+    public int clase;
 
-    public FormularioInsert() {
+    public FormularioInsert(int tipo) {
+        this.clase = tipo;
         crearComponentes();
     }
 
@@ -150,6 +153,10 @@ public class FormularioInsert extends JFrame {
         JTxtFldNumero.addComponentListener(null);
         numero.add(JTxtFldNumero);
 
+        if (clase == 0) {
+            metge();
+        }
+
         JPanel boto = new JPanel();
         boto.setBorder(new EmptyBorder(0, 0, 8, 0));
         JPcontent.add(boto);
@@ -159,10 +166,10 @@ public class FormularioInsert extends JFrame {
 
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);
+        JBtnCrea.addActionListener(new BotonesCrearPersona(clase));
 
         jPrincipal.add(JPcontent, BorderLayout.CENTER);
         pack();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
 
@@ -187,8 +194,10 @@ public class FormularioInsert extends JFrame {
         JTxtFldCompteCorrent = new JTextField(22);
         JTxtFldCompteCorrent.addComponentListener(null);
         compteCorrent.add(JTxtFldCompteCorrent);
+
     }
 
+    /*
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             FormularioInsert frame = new FormularioInsert();
@@ -197,4 +206,5 @@ public class FormularioInsert extends JFrame {
         });
 
     }
+     */
 }

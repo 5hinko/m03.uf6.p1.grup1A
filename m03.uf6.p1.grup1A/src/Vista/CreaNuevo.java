@@ -37,10 +37,12 @@ public class CreaNuevo extends JFrame {
     private final int itemCheck;
     private final String[] datosAIntroducir;
 
-    public CreaNuevo() {
-        itemCheck = 0;
+    public CreaNuevo(int clase) {
+        //itemCheck = 0;
         //itemCheck = TablaInfo.itemCheck;
 
+        itemCheck = clase;
+        
         //Connectar con DB para sacar nombres
         datosAIntroducir = new String[]{"Cheese", "Pepperoni", "Black Olives"};
 
@@ -141,7 +143,7 @@ public class CreaNuevo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Nuevo para crear
-                FormularioInsert insert = new FormularioInsert();
+                FormularioInsert insert = new FormularioInsert(itemCheck);
                 insert.setVisible(true);
                 //for (JTextField texto : jTxtList) {
                   //  texto.getText().toString();
@@ -150,6 +152,7 @@ public class CreaNuevo extends JFrame {
         });
     }
 
+    /*
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -160,5 +163,6 @@ public class CreaNuevo extends JFrame {
             }
         });
     }
+    */
 
 }
