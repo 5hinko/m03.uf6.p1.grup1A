@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -35,18 +36,19 @@ public class MenuInici extends JFrame {
         accionListener();
     }
 
-    private JPanel jPrincipal;
-    private JPanel jPanel;
-    private JPanel jOpciones;
-    private JLabel jTitol;
-    private JButton jBtnPacients;
-    private JButton jBtnMetges;
-    private JButton jBtnMalalties;
-    private JButton jBtnVisitas;
+    private  JPanel jPrincipal;
+    private  JPanel jPanel;
+    private  JPanel jOpciones;
+    
+    public static  JLabel jTitol;
+    public static  JButton jBtnPacients;
+    public static  JButton jBtnMetges;
+    public static  JButton jBtnMalalties;
+    public static  JButton jBtnVisitas;
 
-    private ImageIcon imageIcon;
-    private Image newimg;
-    private JLabel img;
+    public static  ImageIcon imageIcon;
+    public static  Image newimg;
+    public static  JLabel img;
 
     private void creaComponents() {
         setTitle("Gestió Hospital");
@@ -130,6 +132,8 @@ public class MenuInici extends JFrame {
 
         jPrincipal.add(jPanel, BorderLayout.CENTER);
         pack();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 

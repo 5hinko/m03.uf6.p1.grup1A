@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -48,13 +49,13 @@ public class TablaInfo extends JFrame {
     public JPanel jPrincipal;
     public JPanel jPanel;
     public JPanel jPanelConf;
-    public JTextField jTxtFieldBusca;
-    public JLabel jTitol;
-    public JButton jBtnInsert;
-    public JButton jBtnBusca;
-    public JComboBox jCombo;
-    public JTable jTablaInfo;
-    public JScrollPane jScroll;
+    public static JTextField jTxtFieldBusca;
+    public static JLabel jTitol;
+    public static JButton jBtnInsert;
+    public static JButton jBtnBusca;
+    public static JComboBox jCombo;
+    public static JTable jTablaInfo;
+    public static JScrollPane jScroll;
 
     private void creaComponents() {
         setDefaultLookAndFeelDecorated(true);
@@ -138,6 +139,8 @@ public class TablaInfo extends JFrame {
         jPrincipal.add(jPanel, BorderLayout.SOUTH);
 
         pack();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     private void accionListener() {

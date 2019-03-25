@@ -1,7 +1,10 @@
 package Vista;
 
+import Controlador.BotonesCrearPersona;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,38 +17,45 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import m03.uf6.p1.grup1A.EnumTablas;
 
 public class FormularioInsert extends JFrame {
 
-    public JFrame JFwindow;
-    public GridBagConstraints c;
-    public JPanel jPrincipal;
-    public JPanel JPcontent;
-    public JButton JBtnCrea;
-    public JButton jBtnCancelar;
+    private JFrame JFwindow;
+    private GridBagConstraints c;
+    private JPanel jPrincipal;
+    private JPanel JPcontent;
 
-    public JTextField JTxtFldNom;
-    public JTextField JTxtFldPrimerCognom;
-    public JTextField JTxtFldSegonCognom;
-    public JTextField JTxtFldNumeroSS;
-    public JTextField JTxtFldNIF;
-    public JTextField JTxtFldTelf;
-    public JTextField JTxtFldCodiPostal;
-    public JTextField JTxtFldCiutat;
-    public JTextField JTxtFldCarrer;
-    public JTextField JTxtFldNumero;
-    public JTextField JTxtFldPlanta;
-    public JTextField JTxtFldPorta;
+    public static JButton JBtnCrea;
+    public static JButton jBtnCancelar;
 
-    public JTextField JTxtFldSalariMensual;
-    public JTextField JTxtFldNumEmpleat;
-    public JTextField JTxtFldCompteCorrent;
+    public static JTextField JTxtFldNom;
+    public static JTextField JTxtFldPrimerCognom;
+    public static JTextField JTxtFldSegonCognom;
+    public static JTextField JTxtFldNumeroSS;
+    public static JTextField JTxtFldNIF;
+    public static JTextField JTxtFldTelf;
+    public static JTextField JTxtFldCodiPostal;
+    public static JTextField JTxtFldCiutat;
+    public static JTextField JTxtFldCarrer;
+    public static JTextField JTxtFldNumero;
+    public static JTextField JTxtFldPlanta;
+    public static JTextField JTxtFldPorta;
 
-    public String[] data;
-    public int modus;
+    public static JTextField JTxtFldSalariMensual;
+    public static JTextField JTxtFldNumEmpleat;
+    public static JTextField JTxtFldCompteCorrent;
+
+    private String[] data;
+    private int clase;
+
+    public FormularioInsert(int tipo) {
+        this.clase = tipo;
+        crearComponentes();
+    }
 
     public FormularioInsert() {
-        crearComponentes();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void crearComponentes() {
@@ -142,6 +152,10 @@ public class FormularioInsert extends JFrame {
         JTxtFldNumero.addComponentListener(null);
         numero.add(JTxtFldNumero);
 
+        if (clase == EnumTablas.Metges.getNum()) {
+            metge();
+        }
+
         JPanel boto = new JPanel();
         boto.setBorder(new EmptyBorder(0, 0, 8, 0));
         JPcontent.add(boto);
@@ -151,10 +165,12 @@ public class FormularioInsert extends JFrame {
 
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);
+        JBtnCrea.addActionListener(new BotonesCrearPersona(clase));
 
         jPrincipal.add(JPcontent, BorderLayout.CENTER);
         pack();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
     }
 
@@ -172,7 +188,7 @@ public class FormularioInsert extends JFrame {
         JTxtFldCompteCorrent = new JTextField(22);
         JTxtFldCompteCorrent.addComponentListener(null);
         compteCorrent.add(JTxtFldCompteCorrent);
-        
+
         JPanel salariMensual = new JPanel();
         JPcontent.add(salariMensual);
         salariMensual.add(new JLabel("Salari menusal:    "));
@@ -181,6 +197,7 @@ public class FormularioInsert extends JFrame {
         salariMensual.add(JTxtFldSalariMensual);
     }
 
+    /*
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             FormularioInsert frame = new FormularioInsert();
@@ -189,4 +206,5 @@ public class FormularioInsert extends JFrame {
         });
 
     }
+     */
 }

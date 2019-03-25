@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -37,9 +38,11 @@ public class CreaNuevo extends JFrame {
     private final int itemCheck;
     private final String[] datosAIntroducir;
 
-    public CreaNuevo() {
-        itemCheck = 0;
+    public CreaNuevo(int clase) {
+        //itemCheck = 0;
         //itemCheck = TablaInfo.itemCheck;
+
+        itemCheck = clase;
 
         //Connectar con DB para sacar nombres
         datosAIntroducir = new String[]{"Cheese", "Pepperoni", "Black Olives"};
@@ -53,11 +56,15 @@ public class CreaNuevo extends JFrame {
     private JPanel jPanel;
     private JPanel jPanelConf;
 
-    private JTextField jTxtList[];
-    private JLabel jTitol;
-    private JButton jBtnCrea;
-    private JButton jBtnCancelar;
-    private JScrollPane jScroll;
+    public static JTextField jTxtList[];
+    public static JLabel jTitol;
+    public static JButton jBtnCrea;
+    public static JButton jBtnCancelar;
+    public static JScrollPane jScroll;
+
+    public CreaNuevo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     private void creaComponents() {
         setDefaultLookAndFeelDecorated(true);
@@ -93,7 +100,7 @@ public class CreaNuevo extends JFrame {
         //CENTER
         jScroll = new JScrollPane();
         jPanel = new JPanel();
-                jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.PAGE_AXIS));
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.PAGE_AXIS));
         jTxtList = new JTextField[datosAIntroducir.length];
 
         for (int i = 0; i < datosAIntroducir.length; i++) {
@@ -123,6 +130,8 @@ public class CreaNuevo extends JFrame {
         jPrincipal.add(jPanel, BorderLayout.SOUTH);
 
         pack();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     private void accionListener() {
@@ -141,15 +150,16 @@ public class CreaNuevo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Nuevo para crear
-                FormularioInsert insert = new FormularioInsert();
+                FormularioInsert insert = new FormularioInsert(itemCheck);
                 insert.setVisible(true);
                 //for (JTextField texto : jTxtList) {
-                  //  texto.getText().toString();
+                //  texto.getText().toString();
                 //}
             }
         });
     }
 
+    /*
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -160,5 +170,5 @@ public class CreaNuevo extends JFrame {
             }
         });
     }
-
+     */
 }
