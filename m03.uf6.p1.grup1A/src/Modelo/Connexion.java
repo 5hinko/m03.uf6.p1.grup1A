@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package m03.uf6.p1.grup1A;
+package Modelo;
 
 import java.util.Properties;
 import java.io.FileInputStream;
@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,5 +48,21 @@ public class Connexion {
     
     public static Connection getConnection() throws SQLException{
         return DriverManager.getConnection(DRIVER_URL,USER,PASSWORD);
+    }
+    
+    public static ResultSet consultaBBDD(String consultaSQL) throws SQLException {
+
+        Connection con = null;
+        Statement sentencia = null;
+        ResultSet resultat = null;
+        try {
+            con = Connexion.getConnection();
+            sentencia = con.createStatement();
+            sentencia.executeQuery(consultaSQL);
+            resultat = sentencia.getResultSet();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultat;
     }
 }

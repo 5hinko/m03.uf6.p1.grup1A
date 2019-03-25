@@ -1,10 +1,10 @@
-package m03.uf6.p1.grup1A;
+package Modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-class ModeloDeTablaSimple extends AbstractTableModel {
+public class ModeloDeTablaSimple extends AbstractTableModel {
     
     private ArrayList<String> nombreCampos;
     private ArrayList<ArrayList> registros;

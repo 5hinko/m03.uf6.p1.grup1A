@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import m03.uf6.p1.grup1A.EnumTablas;
+import Modelo.EnumTablas;
 
 public class FormularioInsert extends JFrame {
 

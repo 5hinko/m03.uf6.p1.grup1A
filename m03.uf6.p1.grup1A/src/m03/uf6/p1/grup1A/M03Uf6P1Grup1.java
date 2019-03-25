@@ -5,6 +5,7 @@
  */
 package m03.uf6.p1.grup1A;
 
+import Modelo.Connexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

@@ -26,8 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import m03.uf6.p1.grup1A.EnumTablas;
-import m03.uf6.p1.grup1A.MenuInici;
+import Modelo.EnumTablas;
 
 /**
  *

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package m03.uf6.p1.grup1A;
+package Vista;
 
+import Controlador.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -138,35 +139,10 @@ public class MenuInici extends JFrame {
     }
 
     public void accionListener() {
-        jBtnPacients.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TablaInfo frame = new TablaInfo(1);
-                frame.setVisible(true);
-            }
-        });
-        jBtnMetges.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TablaInfo frame = new TablaInfo(0);
-                frame.setVisible(true);
-            }
-        });
-        jBtnMalalties.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TablaInfo frame = new TablaInfo(3);
-                frame.setVisible(true);
-            }
-        });
-        jBtnVisitas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TablaInfo frame = new TablaInfo(2);
-                frame.setVisible(true);
-            }
-        });
-
+        jBtnPacients.addActionListener(new BotonPacient());
+        jBtnMetges.addActionListener(new BotonMetge());
+        jBtnMalalties.addActionListener(new BotonMalalties());
+        jBtnVisitas.addActionListener(new BotonVisitas());
     }
 
     public static void main(String[] args) {
@@ -178,4 +154,5 @@ public class MenuInici extends JFrame {
             }
         });
     }
+
 }
