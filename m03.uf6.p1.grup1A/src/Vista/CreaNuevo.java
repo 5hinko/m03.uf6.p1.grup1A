@@ -43,7 +43,7 @@ public class CreaNuevo extends JFrame {
         //itemCheck = TablaInfo.itemCheck;
 
         itemCheck = clase;
-
+        
         //Connectar con DB para sacar nombres
         datosAIntroducir = new String[]{"Cheese", "Pepperoni", "Black Olives"};
 
@@ -170,5 +170,6 @@ public class CreaNuevo extends JFrame {
             }
         });
     }
-     */
+    */
+
 }

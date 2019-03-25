@@ -46,15 +46,15 @@ public class FormularioInsert extends JFrame {
     public static JTextField JTxtFldNumEmpleat;
     public static JTextField JTxtFldCompteCorrent;
 
-    private String[] data;
-    private int clase;
-
-    public FormularioInsert(int tipo) {
-        this.clase = tipo;
-        crearComponentes();
-    }
+    public static String[] data;
+    //Clase es el ENUM de las clases.
+    public int clase;
 
     public FormularioInsert() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    FormularioInsert(int itemCheck) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -152,7 +152,7 @@ public class FormularioInsert extends JFrame {
         JTxtFldNumero.addComponentListener(null);
         numero.add(JTxtFldNumero);
 
-        if (clase == EnumTablas.Metges.getNum()) {
+        if (clase == 0) {
             metge();
         }
 
@@ -169,8 +169,6 @@ public class FormularioInsert extends JFrame {
 
         jPrincipal.add(JPcontent, BorderLayout.CENTER);
         pack();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
     }
 
