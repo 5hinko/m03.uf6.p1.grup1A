@@ -14,6 +14,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,6 +51,7 @@ public class TablaInfo extends JFrame {
     public JPanel jPrincipal;
     public JPanel jPanel;
     public JPanel jPanelConf;
+
     public static JTextField jTxtFieldBusca;
     public static JLabel jTitol;
     public static JButton jBtnInsert;
@@ -192,7 +195,7 @@ public class TablaInfo extends JFrame {
                             sentencia.setString(5, (String) (dades.getValueAt(fila, 2)));
                             break;
                         case Pacients:
-                            consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ? , ciutat = ?, codipostal= ?, direccion = ? WHERE DNI = ?";
+                            consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ? , ciutat = ?, codipostal= ?, direccio = ? WHERE DNI = ?";
                             sentencia = con.prepareStatement(consulta);
                             sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
                             sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
@@ -205,7 +208,7 @@ public class TablaInfo extends JFrame {
                             sentencia.setString(6, (String) (dades.getValueAt(fila, 3)));
                             break;
                         case Metges:
-                            consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ?, ciutat = ?, codipostal = ?, direccion = ?, numEmpleat = ?, codiCC= ?, salariMensual = ? WHERE DNI = ?";
+                            consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ?, ciutat = ?, codipostal = ?, direccio = ?, numEmpleat = ?, codiCC= ?, salariMensual = ? WHERE DNI = ?";
                             sentencia = con.prepareStatement(consulta);
                             sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
                             sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
@@ -265,8 +268,8 @@ public class TablaInfo extends JFrame {
                                     "SELECT * "
                                     + " FROM " + tablaEnum
                                     + " WHERE codi = " + sQuery + " OR "
-                                    + "nom LIKE '" + sQuery + "' OR "
-                                    + "tratamiento LIKE '" + sQuery + "' OR "
+                                    + "nom LIKE '%" + sQuery + "%' OR "
+                                    + "tratamiento LIKE '%" + sQuery + "%' OR "
                                     + "duradaTratamentDies = " + sQuery
                             );
                             break;
@@ -274,21 +277,21 @@ public class TablaInfo extends JFrame {
                             resultat = consultaBBDD(
                                     "SELECT * "
                                     + " FROM " + tablaEnum
-                                    + " WHERE dataVisita LIKE '" + sQuery + "' OR "
-                                    + "nomMalaltia LIKE '" + sQuery + "' OR "
-                                    + "dniPacient LIKE '" + sQuery + "' OR "
-                                    + "dniMetges LIKE '" + sQuery + "'"
+                                    + " WHERE dataVisita '%" + sQuery + "%' OR "
+                                    + "nomMalaltia '%" + sQuery + "%' OR "
+                                    + "dniPacient '%" + sQuery + "%' OR "
+                                    + "dniMetges '%" + sQuery + "%'"
                             );
                             break;
                         default:
                             resultat = consultaBBDD(
                                     "SELECT * "
                                     + " FROM " + tablaEnum
-                                    + " WHERE nom LIKE '" + sQuery + "' OR "
-                                    + "cognom1 LIKE '" + sQuery + "' OR "
-                                    + "cognom2 LIKE '" + sQuery + "' OR "
-                                    + "cognomDNI LIKE '" + sQuery + "' OR "
-                                    + "numSS LIKE '" + sQuery + "'"
+                                    + " WHERE nom LIKE '%" + sQuery + "%' OR "
+                                    + "cognom1 LIKE '%" + sQuery + "%' OR "
+                                    + "cognom2 LIKE '%" + sQuery + "%' OR "
+                                    + "DNI LIKE '%" + sQuery + "%' OR "
+                                    + "numSS LIKE '%" + sQuery + "%'"
                             );
                             break;
                     }
@@ -319,6 +322,31 @@ public class TablaInfo extends JFrame {
                         frameInsert.setVisible(true);
                         break;
                 }
+            }
+        });
+        //Field
+        /*jTxtFieldBusca.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jBtnBusca.doClick();
+            }
+        });*/
+        jTxtFieldBusca.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e); //To change body of generated methods, choose Tools | Templates.
+
+                jBtnBusca.doClick();
+
+                /*
+                char c = e.getKeyChar();
+                if (Character.isLetterOrDigit(c) || e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jBtnBusca.doClick();
+                } else if (jTxtFieldBusca.getText().toString().length() > 0 && e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    jBtnBusca.doClick();
+                } else {
+                }
+                 */
             }
         });
     }

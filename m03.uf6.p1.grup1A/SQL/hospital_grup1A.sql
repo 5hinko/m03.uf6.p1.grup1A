@@ -31,7 +31,7 @@ numSS CHAR(11) UNIQUE NOT NULL,
 telefon CHAR(9) NOT NULL,
 ciutat CHAR(20) NOT NULL,
 codipostal INT(6),
-direccion CHAR(30),
+direccio CHAR(30),
 numEmpleat SMALLINT(2) UNIQUE,
 codiCC CHAR(20),
 salariMensual INT(10)
@@ -47,7 +47,7 @@ numSS CHAR(11) UNIQUE NOT NULL,
 telefon CHAR(9)NOT NULL,
 ciutat CHAR(20) NOT NULL,
 codipostal INT(6),
-direccion CHAR(20)
+direccio CHAR(20)
 );
 
 CREATE TABLE visita
