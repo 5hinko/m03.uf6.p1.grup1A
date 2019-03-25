@@ -45,16 +45,16 @@ public class TablaInfo extends JFrame {
 
     }
 
-    private JPanel jPrincipal;
-    private JPanel jPanel;
-    private JPanel jPanelConf;
-    private JTextField jTxtFieldBusca;
-    private JLabel jTitol;
-    private JButton jBtnInsert;
-    private JButton jBtnBusca;
-    private JComboBox jCombo;
-    private JTable jTablaInfo;
-    private JScrollPane jScroll;
+    public JPanel jPrincipal;
+    public JPanel jPanel;
+    public JPanel jPanelConf;
+    public JTextField jTxtFieldBusca;
+    public JLabel jTitol;
+    public JButton jBtnInsert;
+    public JButton jBtnBusca;
+    public JComboBox jCombo;
+    public JTable jTablaInfo;
+    public JScrollPane jScroll;
 
     private void creaComponents() {
         setDefaultLookAndFeelDecorated(true);
@@ -168,10 +168,10 @@ public class TablaInfo extends JFrame {
             private void updateQuery() {
                 try {
                     EnumTablas tablaEnum = EnumTablas.getEnum(itemCheck);
-                    String consulta;
+                    String consulta = "UPDATE " + tablaEnum;
                     switch (tablaEnum) {
                         case Malalties:
-                            consulta = "UPDATE " + tablaEnum + " SET nom = ?, causaBaixa = ?, tratamiento = ?, duradaTratamentDies = ? WHERE codi = ?";
+                            consulta += " SET nom = ?, causaBaixa = ?, tratamiento = ?, duradaTratamentDies = ? WHERE codi = ?";
                             sentencia = con.prepareStatement(consulta);
                             sentencia.setString(1, (String) (dades.getValueAt(fila, 1)));
                             sentencia.setInt(2, Integer.parseInt(dades.getValueAt(fila, 2).toString()));
@@ -180,35 +180,42 @@ public class TablaInfo extends JFrame {
                             sentencia.setInt(5, Integer.parseInt(dades.getValueAt(fila, 0).toString()));
                             break;
                         case Visita:
-                            consulta = "UPDATE " + tablaEnum + " SET dataVisita = ?, nomMalaltia = ?, dniPacient = ? , dniMetges = ? WHERE";
+                            consulta += " SET nomMalaltia = ?, dniMetges = ? , informe = ? WHERE dataVisita = ? AND dniPacient = ?";
                             sentencia = con.prepareStatement(consulta);
-                            sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
-                            sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
-                            sentencia.setString(3, (String) (dades.getValueAt(fila, 2)));
-                            sentencia.setString(4, (String) (dades.getValueAt(fila, 3)));
+                            sentencia.setString(1, (String) (dades.getValueAt(fila, 1)));
+                            sentencia.setString(2, (String) (dades.getValueAt(fila, 3)));
+                            sentencia.setString(3, (String) (dades.getValueAt(fila, 4)));
+                            sentencia.setString(4, (String) (dades.getValueAt(fila, 0)));
+                            sentencia.setString(5, (String) (dades.getValueAt(fila, 2)));
                             break;
                         case Pacients:
-                            consulta = "UPDATE " + tablaEnum + " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ? WHERE DNI = ?";
+                            consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ? , ciutat = ?, codipostal= ?, direccion = ? WHERE DNI = ?";
                             sentencia = con.prepareStatement(consulta);
                             sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
                             sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
                             sentencia.setString(3, (String) (dades.getValueAt(fila, 2)));
                             sentencia.setString(4, (String) (dades.getValueAt(fila, 4)));
                             sentencia.setString(5, (String) (dades.getValueAt(fila, 5)));
+                            sentencia.setString(6, (String) (dades.getValueAt(fila, 6)));
+                            sentencia.setInt(7, Integer.parseInt(dades.getValueAt(fila, 7).toString()));
+                            sentencia.setString(8, (String) (dades.getValueAt(fila, 8)));
                             sentencia.setString(6, (String) (dades.getValueAt(fila, 3)));
                             break;
                         case Metges:
-                            consulta = "UPDATE " + tablaEnum + " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ?, numEmpleat = ?, codiCC= ?, salariMensual = ? WHERE DNI = ?";
+                            consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ?, ciutat = ?, codipostal = ?, direccion = ?, numEmpleat = ?, codiCC= ?, salariMensual = ? WHERE DNI = ?";
                             sentencia = con.prepareStatement(consulta);
                             sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
                             sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
                             sentencia.setString(3, (String) (dades.getValueAt(fila, 2)));
                             sentencia.setString(4, (String) (dades.getValueAt(fila, 4)));
                             sentencia.setString(5, (String) (dades.getValueAt(fila, 5)));
-                            sentencia.setInt(6, Integer.parseInt(dades.getValueAt(fila, 6).toString()));
-                            sentencia.setString(7, (String) (dades.getValueAt(fila, 7)));
-                            sentencia.setInt(8, Integer.parseInt(dades.getValueAt(fila, 8).toString()));
-                            sentencia.setString(9, (String) (dades.getValueAt(fila, 3)));
+                            sentencia.setString(6, (String) (dades.getValueAt(fila, 6)));
+                            sentencia.setInt(7, Integer.parseInt(dades.getValueAt(fila, 7).toString()));
+                            sentencia.setString(8, (String) (dades.getValueAt(fila, 8)));
+                            sentencia.setInt(9, Integer.parseInt(dades.getValueAt(fila, 9).toString()));
+                            sentencia.setString(10, (String) (dades.getValueAt(fila, 10)));
+                            sentencia.setInt(11, Integer.parseInt(dades.getValueAt(fila, 11).toString()));
+                            sentencia.setString(12, (String) (dades.getValueAt(fila, 3)));
 
                             break;
                         default:
@@ -295,8 +302,20 @@ public class TablaInfo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Nuevo para crear
-                CreaNuevo frame = new CreaNuevo();
-                frame.setVisible(true);
+                switch (EnumTablas.getEnum(itemCheck)) {
+                    case Visita:
+                        CreaNuevo frame = new CreaNuevo();
+                        frame.setVisible(true);
+                        break;
+                    case Malalties:
+                        frame = new CreaNuevo();
+                        frame.setVisible(true);
+                        break;
+                    default:
+                        FormularioInsert frameInsert = new FormularioInsert();
+                        frameInsert.setVisible(true);
+                        break;
+                }
             }
         });
     }
@@ -326,8 +345,12 @@ public class TablaInfo extends JFrame {
         }*/
         // Nom mostrarem la columna id a la taula, però la necessitem per fer el update
         // si editem un camp
-        TableColumnModel tcm = taula.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(0));
+        /*TableColumnModel tcm = taula.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(0));*/
+        if (EnumTablas.getEnum(itemCheck) == EnumTablas.Malalties) {
+            TableColumnModel tcm = taula.getColumnModel();
+            tcm.removeColumn(tcm.getColumn(0));
+        }
     }
 
     private void cambiosEnComboBox() {
