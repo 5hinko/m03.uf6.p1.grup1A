@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
  * @author Lorenzo
  */
 public abstract class ComprobacionesPersona {
-   
 
     protected String nom;
     protected String cognom1;
@@ -21,26 +20,23 @@ public abstract class ComprobacionesPersona {
     protected String numSegSocial;
     protected String nif;
     protected String telf;
-   
-
-    
 
     public static String corresponAlfabet(String text, String camp) {
         String regla;
         if (camp.equals("nom")) {
-                regla = "[a-zA-ZáÁéÉíÍóÓúÚàÀèÈòÒïÏüÜñÑçÇ ]+";
-        }
-        else {
-                regla = "[a-zA-ZáÁéÉíÍóÓúÚàÀèÈòÒïÏüÜ'ñÑçÇ ]+";
+            regla = "[a-zA-ZáÁéÉíÍóÓúÚàÀèÈòÒïÏüÜñÑçÇ ]+";
+        } else {
+            regla = "[a-zA-ZáÁéÉíÍóÓúÚàÀèÈòÒïÏüÜ'ñÑçÇ ]+";
         }
         Pattern patro = Pattern.compile(regla);
         Matcher comparador = patro.matcher(text);
         String error = "";
-
-        
-         if (comparador.matches() == false) {
-            error = "El camp " + camp + " conté els següents "
-                    + "caràcters invàlids >>";
+        if (text.isEmpty()) {
+            error += "Error, el campo del " + camp + " no puede estar vacio\n";
+        }
+        else if (comparador.matches() == false) {
+            error = "El campo " + camp + " contiene los siguientes "
+                    + "carácters inválidos >>";
             for (int i = 0; i < text.length(); i++) {
                 String subText = text.substring(i, i + 1);
                 comparador = patro.matcher(subText);
@@ -50,7 +46,7 @@ public abstract class ComprobacionesPersona {
             }
             error += "<< .\n";
         }
-        
+
         return error;
     }
 
@@ -59,15 +55,12 @@ public abstract class ComprobacionesPersona {
         Pattern patro = Pattern.compile(regla);
         Matcher comparador = patro.matcher(num);
         String error = "";
-        if (num.isEmpty()) {
-            error += "El camp número de la seguritat social "
-                    + "no pot estar buit.\n";
-        } else if (num.length() != 12) {
-            error += "El camp número de la seguritat social "
-                    + "no precisa d'una longitud de 12 números.\n ";
+        if (num.length() != 12) {
+            error += "El campo número de la seguridad social "
+                    + "no tiene una longitud de 12 números.\n ";
         } else if (comparador.matches() == false) {
-            error += "El camp número de la seguritat social no "
-                    + "està conformat per números.\n ";
+            error += "El campo número de la seguridad social no "
+                    + "está conformado por números.\n ";
         } else if ((num.length() == 12) & (comparador.matches() == true)) {
             String control = num.substring(10, 12) + ".0";
             Double x = Double.valueOf(num.substring(0, 10));
@@ -82,36 +75,33 @@ public abstract class ComprobacionesPersona {
             }
 
             if (x > 66) {
-                error += "El camp número de la seguritat social"
+                error += "El campo número de la seguridad social"
                         + " assenyala a una provincia "
                         + "inexistent, no és valid.\n";
             } else if (!provincia.equals(control)) {
-                error += "El camp número de la seguritat social"
-                        + " no disposa d'una combinació de"
-                        + " números vàlida.\n";
+                error += "El campo del número de la seguridad social"
+                        + " no tiene una combinación de números válidos.\n";
             }
         }
 
         return error;
     }
 
-    public static  String comprovaTelf(String telf) {
+    public static String comprovaTelf(String telf) {
         String regla = "[0-9]+";
         Pattern patro = Pattern.compile(regla);
         Matcher comparador = patro.matcher(telf);
         String error = "";
 
         if (telf.length() != 9) {
-            error += "El camp número de telèfon no precisa"
-                    + " d'una longitud de 9 digits.\n";
+            error += "El Número de teléfono tiene que constar de 9 números.\n";
         }
 
         if (comparador.matches() == false) {
-            error += "El camp número de telèfon no està"
-                    + " conformat únicament per números.\n";
+            error += "El Número de teléfono tiene que constar de 9 números.\n";
         } else {
             if (Integer.parseInt(telf.substring(0, 1)) < 6) {
-                error += "El camp número de telèfon ha de ser un"
+                error += "El campo número de telèfon tiene que ser un"
                         + " número nacional.\n";
             }
         }
@@ -125,22 +115,19 @@ public abstract class ComprobacionesPersona {
         Pattern patro = Pattern.compile(regla);
         Matcher comparador = patro.matcher(nif);
         String error = "";
-        if (nif.isEmpty()) {
-            error += "El camp NIF no pot estar buit.\n";
-        } else if (comparador.matches() == true) {
+        if (comparador.matches() == true) {
 
             String numeros = nif.substring(0, 8);
             numeros += lletres.charAt(Integer.parseInt(numeros) % 23);
 
             if (!nif.equals(numeros)) {
-                error += "El camp NIF no és valid, els digits "
-                        + "no corresponen amb la lletra.\n";
+                error += "El campo NIF no es valido, los digitos "
+                        + "no corresponden con la letra.\n";
             }
         } else {
-            error += "El camp NIF no disposa del format adequat.\n";
+            error += "El campo NIF no presenta un format válido.\n";
         }
 
         return error;
-    } 
+    }
 }
-

@@ -34,7 +34,7 @@ public class BotonInsertDatos implements ActionListener {
                     frame.setVisible(true);
                     break;
                 default:
-                    FormularioInsert frameInsert = new FormularioInsert();
+                    FormularioInsert frameInsert = new FormularioInsert(itemCheck);
                     frameInsert.setVisible(true);
                     break;
             }

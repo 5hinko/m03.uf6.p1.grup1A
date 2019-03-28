@@ -50,12 +50,9 @@ public class FormularioInsert extends JFrame {
     //Clase es el ENUM de las clases.
     public int clase;
 
-    public FormularioInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    FormularioInsert(int itemCheck) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public FormularioInsert(int clase) {
+        this.clase = clase;
+        crearComponentes();
     }
 
     private void crearComponentes() {
@@ -103,19 +100,19 @@ public class FormularioInsert extends JFrame {
         JTxtFldSegonCognom.addComponentListener(null);
         segonCognom.add(JTxtFldSegonCognom);
 
-        JPanel numeroSS = new JPanel();
-        JPcontent.add(numeroSS);
-        numeroSS.add(new JLabel("Número SS:  "));
-        JTxtFldNumeroSS = new JTextField(24);
-        JTxtFldNumeroSS.addComponentListener(null);
-        numeroSS.add(JTxtFldNumeroSS);
-
         JPanel nif = new JPanel();
         JPcontent.add(nif);
         nif.add(new JLabel("NIF:   "));
         JTxtFldNIF = new JTextField(28);
         JTxtFldNIF.addComponentListener(null);
         nif.add(JTxtFldNIF);
+
+        JPanel numeroSS = new JPanel();
+        JPcontent.add(numeroSS);
+        numeroSS.add(new JLabel("Número SS:  "));
+        JTxtFldNumeroSS = new JTextField(24);
+        JTxtFldNumeroSS.addComponentListener(null);
+        numeroSS.add(JTxtFldNumeroSS);
 
         JPanel telf = new JPanel();
         JPcontent.add(telf);

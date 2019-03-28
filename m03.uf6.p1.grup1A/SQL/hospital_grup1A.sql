@@ -16,38 +16,38 @@ CREATE TABLE malalties
 (
 codi SMALLINT(3) AUTO_INCREMENT PRIMARY KEY,
 nom CHAR(30) NOT NULL UNIQUE,
-causaBaixa BIT,
+causaBaixa boolean,
 tratamiento CHAR(50),
 duradaTratamentDies INT(5)
 );
 
 CREATE TABLE metges
 (
-nom CHAR(15) NOT NULL,
-cognom1 CHAR(20) NOT NULL,
-cognom2 CHAR(20) NOT NULL,
+nom CHAR(25) NOT NULL,
+cognom1 CHAR(30) NOT NULL,
+cognom2 CHAR(30) NOT NULL,
 DNI CHAR(9) PRIMARY KEY,
 numSS CHAR(11) UNIQUE NOT NULL,
 telefon CHAR(9) NOT NULL,
-ciutat CHAR(20) NOT NULL,
-codipostal INT(6),
-direccio CHAR(30),
-numEmpleat SMALLINT(2) UNIQUE,
+ciutat CHAR(25) NOT NULL,
+codipostal CHAR(6) NOT NULL,
+direccio CHAR(50) NOT NULL,
+numEmpleat SMALLINT(2) UNIQUE NOT NULL,
 codiCC CHAR(20),
 salariMensual INT(10)
 );
 
 CREATE TABLE pacients
 (
-nom CHAR(15) NOT NULL,
-cognom1 CHAR(20) NOT NULL,
-cognom2 CHAR(20) NOT NULL,
+nom CHAR(25) NOT NULL,
+cognom1 CHAR(30) NOT NULL,
+cognom2 CHAR(30) NOT NULL,
 DNI CHAR(9) PRIMARY KEY,
 numSS CHAR(11) UNIQUE NOT NULL,
-telefon CHAR(9)NOT NULL,
-ciutat CHAR(20) NOT NULL,
-codipostal INT(6),
-direccio CHAR(20)
+telefon CHAR(9) NOT NULL,
+ciutat CHAR(25) NOT NULL,
+codipostal CHAR(6) NOT NULL,
+direccio CHAR(50) NOT NULL
 );
 
 CREATE TABLE visita
@@ -62,6 +62,76 @@ FOREIGN KEY (dniPacient) REFERENCES pacients(DNI),
 FOREIGN KEY (dniMetges) REFERENCES metges(DNI)
 );
 
+#Cambiar los valores de tamaño de las tablas de pacientes
+#Y QUITAR ESTE ALTER LUEGO
+
+
+DELIMITER //
+CREATE FUNCTION introducir_paciente (nombre char(25), cognom1 char(30), cognom2 char(30),
+									 dni char(9), numss char(11), telefono char(9), ciudad char(25),
+                                     codipostal CHAR(6), direccio char(40)) RETURNS INT
+	BEGIN
+		INSERT INTO pacients (nom,cognom1,cognom2,DNI,numSS,telefon,ciutat,codipostal,direccio)
+			VALUES (nombre,cognom1,cognom2,dni,numss,telefono,ciudad,codipostal,direccio);
+		RETURN 1;
+	END ;
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE FUNCTION introducir_medico (nombre char(25), cognom1 char(30), cognom2 char(30),
+									 dni char(9), numss char(11), telefono char(9), ciudad char(25),
+                                     codipostal CHAR(6), direccio char(40), numEmpleat SMALLINT(2),
+                                     codiCC CHAR(20),salariMensual INT(10)) RETURNS INT
+	BEGIN
+		INSERT INTO metges (nom,cognom1,cognom2,DNI,numSS,telefon,ciutat,codipostal,direccio,numEmpleat,codiCC,salariMensual)
+			VALUES (nombre,cognom1,cognom2,dni,numss,telefono,ciudad,codipostal,direccio,numEmpleat,codiCC,salariMensual);       
+		RETURN 1;
+	END ;
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE FUNCTION introducir_malaltia (nom CHAR(30),causaBaixa boolean,tratamiento CHAR(50),
+										duradaTratamentDies INT(5)) RETURNS INT
+	BEGIN
+		INSERT INTO malalties (nom,causaBaixa ,tratamiento,duradaTratamentDies)
+				VALUES (nom,causaBaixa ,tratamiento,duradaTratamentDies);
+		RETURN 1;
+	END ;
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE FUNCTION introducir_visita (dataVisita DATE,nomMalaltia CHAR(30),dniPacient CHAR(9),
+									dniMetges CHAR(9),informe CHAR(200)) RETURNS INT
+	BEGIN
+		INSERT INTO visita (dataVisita,nomMalaltia,dniPacient,dniMetges,informe)
+				VALUES (dataVisita,nomMalaltia,dniPacient,dniMetges,informe);
+		RETURN 1;
+	END ;
+//
+DELIMITER ;
+
+    
+                                    
+
+
+
+
+
+
+#EJECUCION FUNCIONES EJEMPLO
+SELECT introducir_paciente('Raymundo','Montenegro','Sanchez','43562567T','2263616T','661352274','Sevilla','123456','Direccion 3') AS 'hola';
+SELECT introducir_medico('Francisco','Montenegro','Sanchez','43562568T','2263626T','661352374','Sevilla','23456','Direccion 3',10,'wwe',10000) AS 'hola';
+
+
+
+
+
 INSERT INTO malalties VALUES
 (NULL,'Fiebre',0,'Reposo',20),
 (NULL,'Migraña',1,'Mucho reposo',30),
@@ -69,16 +139,16 @@ INSERT INTO malalties VALUES
 (NULL, 'Varicela',1,'Reposo y cremitas',300);
 
 INSERT INTO metges VALUES
-('Dr.Paco','Ruíz','Millan','23415679N','12SDE34GFA4','663492256','Toledo',3948,'Pasadizo Esgargamellà, 232A',34,'EDASERD4537F49392459',3000),
-('Dra.Lisa','Perez','Perez','58273238P','327E4228EFS','661023131','Albacete',38369,'Alameda Resguardam, 184',20,'EEFFA733283393892472',3000),
-('Dr.Jordi','Montesco','De la Curz','47293742Y','EDF45234523','663421147','Huelva',06481,'Carrera Dardada, 13B 13ºF',01,'EDFA341234562341234',5000),
-('Dra.Valentina','Capuleto','Verona','36378234T','D3421342341','661437786','Guipúzcoa',07311,'Carretera engorguésseu trafegàs, 226B 10ºD',02,'EF45434343434421901',5000);
+('Dr.Paco','Ruíz','Millan','23415679N','12SDE34GFA4','663492256','Toledo','3948','Pasadizo Esgargamellà, 232A',34,'EDASERD4537F49392459',3000),
+('Dra.Lisa','Perez','Perez','58273238P','327E4228EFS','661023131','Albacete','38369','Alameda Resguardam, 184',20,'EEFFA733283393892472',3000),
+('Dr.Jordi','Montesco','De la Curz','47293742Y','EDF45234523','663421147','Huelva','06481','Carrera Dardada, 13B 13ºF',01,'EDFA341234562341234',5000),
+('Dra.Valentina','Capuleto','Verona','36378234T','D3421342341','661437786','Guipúzcoa','07311','Carretera engorguésseu trafegàs, 226B 10ºD',02,'EF45434343434421901',5000);
 
 INSERT INTO pacients VALUES
-('José','Do Caroço','Martinez','1839456R','12SDE54GG3R','663745592','Albacete',12118,'Pasadizo emmatxucament, 256B'),
-('Pedro','Pedrez','Caboclo','44324567P','473945DFRES','66341129','Tenerife',10539,'Travesía engabiaríem, 235 2ºC'),
-('Magdalena','Roja','Da Silva','38199237Y','S73HR4378A2','665432287','Orense',48443,'Callejón gallardejaré, 25A 7ºD'),
-('Jeusalda','Ros','Julià','7439456U','S83HD45381W','664532256','Murcia',02704,'Paseo Alicorn, 144 5ºC');
+('José','Do Caroço','Martinez','1839456R','12SDE54GG3R','663745592','Albacete','12118','Pasadizo emmatxucament, 256B'),
+('Pedro','Pedrez','Caboclo','44324567P','473945DFRES','66341129','Tenerife','10539','Travesía engabiaríem, 235 2ºC'),
+('Magdalena','Roja','Da Silva','38199237Y','S73HR4378A2','665432287','Orense','48443','Callejón gallardejaré, 25A 7ºD'),
+('Jeusalda','Ros','Julià','7439456U','S83HD45381W','664532256','Murcia','02704','Paseo Alicorn, 144 5ºC');
 
 
 INSERT INTO visita VALUES
@@ -89,5 +159,6 @@ INSERT INTO visita VALUES
 ('2019-01-01','Asma','1839456R','58273238P','');
 
 
-
+INSERT INTO malalties (codi,nom) values(null,"Enfermeda");
+SELECT * FROM malalties;
 
