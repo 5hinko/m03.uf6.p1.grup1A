@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,24 +46,9 @@ public class Connexion {
         USER = propiedades.getProperty("user");
         PASSWORD = propiedades.getProperty("passwd");
     }
-    
-    public static Connection getConnection() throws SQLException{
-        return DriverManager.getConnection(DRIVER_URL,USER,PASSWORD);
-    }
-    
-    public static ResultSet consultaBBDD(String consultaSQL) throws SQLException {
 
-        Connection con = null;
-        Statement sentencia = null;
-        ResultSet resultat = null;
-        try {
-            con = Connexion.getConnection();
-            sentencia = con.createStatement();
-            sentencia.executeQuery(consultaSQL);
-            resultat = sentencia.getResultSet();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultat;
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DRIVER_URL, USER, PASSWORD);
     }
+
 }

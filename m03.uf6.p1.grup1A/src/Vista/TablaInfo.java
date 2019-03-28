@@ -7,29 +7,20 @@ package Vista;
 
 import Controlador.*;
 import Modelo.*;
-import Vista.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
@@ -202,13 +193,29 @@ public class TablaInfo extends JFrame {
                 jCombo.addItem(listObject[i]);
             }
         }
+        jCombo.setSelectedItem(EnumTablas.getEnum(itemCheck));
 
+        selectAllInTabla();
+    }
+
+    public static void selectAllInTabla() {
         try {
-            ResultSet resultat = Connexion.consultaBBDD(
-                    "SELECT * "
-                    + " FROM " + EnumTablas.getEnum(itemCheck));
-            TableModel model = new ModeloDeTablaSimple(resultat);
 
+            ResultSet resultat = null;
+            PreparedStatement statement = null;
+            Connection con = null;
+
+            con = Connexion.getConnection();
+            //Reset Select ALL
+            String sQuery = "SELECT * "
+                    + " FROM " + EnumTablas.getEnum(itemCheck);
+            statement = con.prepareStatement(sQuery);
+
+            statement.executeQuery();
+            
+            resultat = statement.getResultSet();
+
+            TableModel model = new ModeloDeTablaSimple(resultat);
             actualitzaTaula(jTablaInfo, model);
         } catch (SQLException ex) {
             Logger.getLogger(TablaInfo.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,13 +223,10 @@ public class TablaInfo extends JFrame {
     }
 
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                TablaInfo frame = new TablaInfo(1);
-                frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            TablaInfo frame = new TablaInfo(1);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
     }
 
