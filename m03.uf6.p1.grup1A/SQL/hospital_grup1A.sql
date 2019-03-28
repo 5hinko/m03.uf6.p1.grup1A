@@ -65,7 +65,8 @@ FOREIGN KEY (dniMetges) REFERENCES metges(DNI)
 #Cambiar los valores de tamaño de las tablas de pacientes
 #Y QUITAR ESTE ALTER LUEGO
 
-
+###
+###Procedures para INSERT
 DELIMITER //
 CREATE FUNCTION introducir_paciente (nombre char(25), cognom1 char(30), cognom2 char(30),
 									 dni char(9), numss char(11), telefono char(9), ciudad char(25),
@@ -115,9 +116,42 @@ CREATE FUNCTION introducir_visita (dataVisita DATE,nomMalaltia CHAR(30),dniPacie
 	END ;
 //
 DELIMITER ;
+###
+###
 
+###
+###Procedures para COUNT
+DELIMITER //
+CREATE FUNCTION existe_paciente (dni CHAR(9))RETURNS INT 
+	BEGIN
+	RETURN (SELECT COUNT(*) FROM pacients p WHERE p.DNI = dni);
     
-                                    
+    END ;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION existe_medico (dni CHAR(9)) RETURNS INT
+	BEGIN
+		RETURN (SELECT COUNT(*) FROM metges m  WHERE m.DNI = dni);
+	END ;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION existe_malaltia (codi SMALLINT(3)) RETURNS INT
+	BEGIN
+		RETURN (SELECT COUNT(*) FROM malalties ma WHERE ma.codi = codi);
+	END ;
+//
+DELIMITER ;
+
+
+
+
+SELECT existe_paciente('1839456R');
+SELECT existe_medico('23415679N');
+SELECT existe_malaltia(1);
 
 
 
@@ -129,7 +163,10 @@ SELECT introducir_paciente('Raymundo','Montenegro','Sanchez','43562567T','226361
 SELECT introducir_medico('Francisco','Montenegro','Sanchez','43562568T','2263626T','661352374','Sevilla','23456','Direccion 3',10,'wwe',10000) AS 'hola';
 
 
+INSERT INTO malalties VALUES
+(NULL,'MalaltiaPrueba',true,'Reposo',20);
 
+SELECT * FROM malalties;
 
 
 INSERT INTO malalties VALUES
