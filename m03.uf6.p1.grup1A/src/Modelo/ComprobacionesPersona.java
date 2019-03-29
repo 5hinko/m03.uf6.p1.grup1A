@@ -87,7 +87,7 @@ public abstract class ComprobacionesPersona {
         return error;
     }
 
-    //Comentatrio
+   
     public static String comprovaTelf(String telf) {
         String regla = "[0-9]+";
         Pattern patro = Pattern.compile(regla);

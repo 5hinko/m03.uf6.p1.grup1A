@@ -12,9 +12,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -139,10 +135,10 @@ public class MenuInici extends JFrame {
     }
 
     public void accionListener() {
-        jBtnPacients.addActionListener(new BotonPacient());
-        jBtnMetges.addActionListener(new BotonMetge());
-        jBtnMalalties.addActionListener(new BotonMalalties());
-        jBtnVisitas.addActionListener(new BotonVisitas());
+        jBtnPacients.addActionListener(new BotonMenuInicio());
+        jBtnMetges.addActionListener(new BotonMenuInicio());
+        jBtnMalalties.addActionListener(new BotonMenuInicio());
+        jBtnVisitas.addActionListener(new BotonMenuInicio());
     }
 
     public static void main(String[] args) {

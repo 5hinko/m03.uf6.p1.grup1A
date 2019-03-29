@@ -6,9 +6,9 @@
 package Controlador;
 
 import Modelo.EnumTablas;
-import Vista.CreaNuevo;
 import Vista.FormularioInsert;
 import static Vista.TablaInfo.itemCheck;
+import Vista.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,12 +26,12 @@ public class BotonInsertDatos implements ActionListener {
             //Nuevo para crear
             switch (EnumTablas.getEnum(itemCheck)) {
                 case Visita:
-                    CreaNuevo frame = new CreaNuevo();
-                    frame.setVisible(true);
+                    VisitaNova frameVisita = new VisitaNova();
+                    frameVisita.setVisible(true);
                     break;
                 case Malalties:
-                    frame = new CreaNuevo();
-                    frame.setVisible(true);
+                    NovaMalaltia frameMalaltia = new NovaMalaltia();
+                    frameMalaltia.setVisible(true);
                     break;
                 default:
                     FormularioInsert frameInsert = new FormularioInsert(itemCheck);

@@ -150,7 +150,7 @@ public class TablaInfo extends JFrame {
         jCombo.addActionListener(new ComboBoxAction());
 
         //Busca
-        jBtnBusca.addActionListener(new BotonBuscar());
+        jBtnBusca.addActionListener(new BotonTablaInfoBuscar());
 
         //Insert
         jBtnInsert.addActionListener(new BotonInsertDatos());
