@@ -66,6 +66,7 @@ public class BotonVisitaNovaCrea implements ActionListener {
         } else {
             //Crea Visita
 
+            //RollBack
         }
     }
 

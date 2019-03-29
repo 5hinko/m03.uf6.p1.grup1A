@@ -4,6 +4,7 @@ CREATE DATABASE hospital_grup1A;
 DROP USER IF EXISTS 'admin_hospital_grup1A'@'localhost';
 CREATE USER 'admin_hospital_grup1A'@'localhost' IDENTIFIED BY 'admin';
 GRANT ALL PRIVILEGES ON hospital_grup1A.* TO 'admin_hospital_grup1A'@'localhost';
+GRANT SELECT ON mysql.proc TO 'admin_hospital_grup1A'@'localhost';
 
 DROP USER IF EXISTS 'usuari_hospital_grup1A'@'localhost';
 CREATE USER 'usuari_hospital_grup1A'@'localhost' IDENTIFIED BY 'usuari';
@@ -32,7 +33,6 @@ telefon CHAR(9) NOT NULL,
 ciutat CHAR(25) NOT NULL,
 codipostal CHAR(6) NOT NULL,
 direccio CHAR(50) NOT NULL,
-numEmpleat SMALLINT(2) UNIQUE NOT NULL,
 codiCC CHAR(20),
 salariMensual INT(10)
 );
@@ -65,7 +65,7 @@ FOREIGN KEY (dniMetges) REFERENCES metges(DNI)
 #Cambiar los valores de tamaño de las tablas de pacientes
 #Y QUITAR ESTE ALTER LUEGO
 
-###
+###HACER procedures para ver el num SS?
 ###Procedures para INSERT
 DELIMITER //
 CREATE FUNCTION introducir_paciente (nombre char(25), cognom1 char(30), cognom2 char(30),
@@ -146,12 +146,27 @@ CREATE FUNCTION existe_malaltia (codi SMALLINT(3)) RETURNS INT
 //
 DELIMITER ;
 
+##Comprobaciones extra - Existe Alguien con el mismo numero de SS
+
+DELIMITER //
+CREATE FUNCTION existeSS(SS CHAR(11)) RETURNS INT
+	BEGIN
+		DECLARE cuenta INT;
+		SET cuenta = (SELECT COUNT(*) FROM metges mt WHERE mt.numSS = SS);
+        SET cuenta = cuenta + (SELECT COUNT(*) FROM pacients p WHERE p.numSS = SS);
+        RETURN cuenta;
+	END ;
+//
+DELIMITER ;
+
+
 
 
 
 SELECT existe_paciente('1839456R');
 SELECT existe_medico('23415679N');
 SELECT existe_malaltia(1);
+SELECT existeSS('2263616T');
 
 
 
@@ -160,7 +175,7 @@ SELECT existe_malaltia(1);
 
 #EJECUCION FUNCIONES EJEMPLO
 SELECT introducir_paciente('Raymundo','Montenegro','Sanchez','43562567T','2263616T','661352274','Sevilla','123456','Direccion 3') AS 'hola';
-SELECT introducir_medico('Francisco','Montenegro','Sanchez','43562568T','2263626T','661352374','Sevilla','23456','Direccion 3',10,'wwe',10000) AS 'hola';
+SELECT introducir_medico('Francisco','Montenegro','Sanchez','43562568T','2263626T','661352374','Sevilla','23456','Direccion 3','wwe',10000) AS 'hola';
 
 
 INSERT INTO malalties VALUES
@@ -176,10 +191,10 @@ INSERT INTO malalties VALUES
 (NULL, 'Varicela',1,'Reposo y cremitas',300);
 
 INSERT INTO metges VALUES
-('Dr.Paco','Ruíz','Millan','23415679N','12SDE34GFA4','663492256','Toledo','3948','Pasadizo Esgargamellà, 232A',34,'EDASERD4537F49392459',3000),
-('Dra.Lisa','Perez','Perez','58273238P','327E4228EFS','661023131','Albacete','38369','Alameda Resguardam, 184',20,'EEFFA733283393892472',3000),
-('Dr.Jordi','Montesco','De la Curz','47293742Y','EDF45234523','663421147','Huelva','06481','Carrera Dardada, 13B 13ºF',01,'EDFA341234562341234',5000),
-('Dra.Valentina','Capuleto','Verona','36378234T','D3421342341','661437786','Guipúzcoa','07311','Carretera engorguésseu trafegàs, 226B 10ºD',02,'EF45434343434421901',5000);
+('Dr.Paco','Ruíz','Millan','23415679N','12SDE34GFA4','663492256','Toledo','3948','Pasadizo Esgargamellà, 232A','EDASERD4537F49392459',3000),
+('Dra.Lisa','Perez','Perez','58273238P','327E4228EFS','661023131','Albacete','38369','Alameda Resguardam, 184','EEFFA733283393892472',3000),
+('Dr.Jordi','Montesco','De la Curz','47293742Y','EDF45234523','663421147','Huelva','06481','Carrera Dardada, 13B 13ºF','EDFA341234562341234',5000),
+('Dra.Valentina','Capuleto','Verona','36378234T','D3421342341','661437786','Guipúzcoa','07311','Carretera engorguésseu trafegàs, 226B 10ºD','EF45434343434421901',5000);
 
 INSERT INTO pacients VALUES
 ('José','Do Caroço','Martinez','1839456R','12SDE54GG3R','663745592','Albacete','12118','Pasadizo emmatxucament, 256B'),
