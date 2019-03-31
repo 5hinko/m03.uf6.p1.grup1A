@@ -6,6 +6,8 @@
 package m03.uf6.p1.grup1A;
 
 import Modelo.Connexion;
+import Modelo.ConnexionUser;
+import static Modelo.ProcedimientosPersona.conn;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,9 +31,22 @@ public class M03Uf6P1Grup1 {
      */
     public static void main(String[] args) throws SQLException {
         Connection conn = Connexion.getConnection();
-        
+         /*
+
 Statement sentencia = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            sentencia.executeQuery("select * from metges");
+            
+            String data[] = {"User","aplelido","sdsasd","dsadas","adsadsa","addsa","dasd","dsa","sadas"};
+            conn = ConnexionUser.getConnection();
+            CallableStatement statement = conn.prepareCall("{?=call introducir_paciente(?,?,?,?,?,?,?,?,?)}");
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.setString(2, data[0]);
+            for (int i = 0; i <data.length; i++) {
+            statement.setString(i+2, data[i]);
+            }
+                    statement.execute();
+            
+            
+            sentencia.executeQuery("select * from pacients");
             ResultSet resultado = sentencia.getResultSet();
             while (resultado.next()) {
                 String dniMedico = resultado.getString("DNI");
@@ -40,7 +55,7 @@ Statement sentencia = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,Resul
                 
             }
             
-            
+           
             CallableStatement statement = conn.prepareCall("{?=call existe_malaltia(?)}");
             Statement smt  = conn.createStatement();
             statement.registerOutParameter(1, Types.INTEGER);
@@ -48,6 +63,7 @@ Statement sentencia = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,Resul
             statement.execute();
             int numero = statement.getInt(1);
             System.out.println("Numero de enfermedades con ese codigo: " + numero);
+            /*
             
             
             /*
@@ -62,5 +78,15 @@ codiCC CHAR(20),
 salariMensual INT(10)
 */
     }
-
+        public void eso(String[] data) throws SQLException{
+            System.out.println("Data =" + data);
+            conn = ConnexionUser.getConnection();
+            CallableStatement statement = conn.prepareCall("{?=call introducir_paciente(?,?,?,?,?,?,?,?,?)}");
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.setString(2, data[0]);
+            for (int i = 0; i <data.length; i++) {
+            statement.setString(i+2, data[i]);
+            }
+                    statement.execute();
+        }
 }

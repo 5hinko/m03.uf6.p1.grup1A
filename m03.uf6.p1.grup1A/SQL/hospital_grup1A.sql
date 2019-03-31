@@ -4,11 +4,11 @@ CREATE DATABASE hospital_grup1A;
 DROP USER IF EXISTS 'admin_hospital_grup1A'@'localhost';
 CREATE USER 'admin_hospital_grup1A'@'localhost' IDENTIFIED BY 'admin';
 GRANT ALL PRIVILEGES ON hospital_grup1A.* TO 'admin_hospital_grup1A'@'localhost';
-GRANT SELECT ON mysql.proc TO 'admin_hospital_grup1A'@'localhost';
 
 DROP USER IF EXISTS 'usuari_hospital_grup1A'@'localhost';
 CREATE USER 'usuari_hospital_grup1A'@'localhost' IDENTIFIED BY 'usuari';
 GRANT SELECT ON hospital_grup1A.* TO 'usuari_hospital_grup1A'@'localhost';
+GRANT SELECT ON mysql.proc TO 'usuari_hospital_grup1A'@'localhost';
 FLUSH PRIVILEGES;
 USE hospital_grup1A;
 
@@ -83,11 +83,11 @@ DELIMITER ;
 DELIMITER //
 CREATE FUNCTION introducir_medico (nombre char(25), cognom1 char(30), cognom2 char(30),
 									 dni char(9), numss char(11), telefono char(9), ciudad char(25),
-                                     codipostal CHAR(6), direccio char(40), numEmpleat SMALLINT(2),
+                                     codipostal CHAR(6), direccio char(40),
                                      codiCC CHAR(20),salariMensual INT(10)) RETURNS INT
 	BEGIN
-		INSERT INTO metges (nom,cognom1,cognom2,DNI,numSS,telefon,ciutat,codipostal,direccio,numEmpleat,codiCC,salariMensual)
-			VALUES (nombre,cognom1,cognom2,dni,numss,telefono,ciudad,codipostal,direccio,numEmpleat,codiCC,salariMensual);       
+		INSERT INTO metges (nom,cognom1,cognom2,DNI,numSS,telefon,ciutat,codipostal,direccio,codiCC,salariMensual)
+			VALUES (nombre,cognom1,cognom2,dni,numss,telefono,ciudad,codipostal,direccio,codiCC,salariMensual);       
 		RETURN 1;
 	END ;
 //

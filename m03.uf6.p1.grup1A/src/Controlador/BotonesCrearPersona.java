@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import m03.uf6.p1.grup1A.M03Uf6P1Grup1;
 
 /**
  *
@@ -30,10 +31,10 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
     }
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
+    public  void actionPerformed(ActionEvent ae) {
 
         String[] data = null;
-        String errors = null;
+        String errors = "";
         boolean fallo = false;
         try {
             if (clase == 0) {
@@ -51,7 +52,7 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
                 data[10] = JTxtFldCompteCorrent.getText();
                 data[11] = JTxtFldSalariMensual.getText();
             } else if (clase == 1) {
-                data = new String[12];
+                data = new String[9];
                 data[0] = JTxtFldNom.getText();
                 data[1] = JTxtFldPrimerCognom.getText();
                 data[2] = JTxtFldSegonCognom.getText();
@@ -68,8 +69,10 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
 
         } catch (NullPointerException e) {
             errors = "Los campos no pueden estar vacios.";
-            fallo = true;
-            ErrorInsert.infoBox(errors, "ERROR");
+        }
+
+        if (errors.length() > 0) {
+            ErrorInsert.infoBox(errors, "Error");
         }
 
         try {
@@ -82,10 +85,12 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
              */
             if (ProcedimientosPersona.existePaciente(data[3])) {
                 ErrorInsert.infoBox("Ya existe un paciente/medico con ese DNI", "Error");
+                /*
             } else if (ProcedimientosPersona.existeSS(data[4])) {
                 ErrorInsert.infoBox("Ya existe un paciente/medico con ese numero de SS", "Error");
+                 */
             } else {
-                ErrorInsert.infoBox("Bien", "Error");
+                ProcedimientosPersona.insertarPaciente(data);
             }
 
             /*
