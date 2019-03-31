@@ -157,9 +157,9 @@ public class FormularioInsert extends JFrame {
         boto.setBorder(new EmptyBorder(0, 0, 8, 0));
         JPcontent.add(boto);
 
-        jBtnCancelar = new JButton("Cancelar");
-        boto.add(jBtnCancelar);
-        jBtnCancelar.addActionListener(new BotonesCrearPersona(clase));
+//        jBtnCancelar = new JButton("Cancelar");
+//        boto.add(jBtnCancelar);
+//        jBtnCancelar.addActionListener(new BotonesCrearPersona(clase));
 
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);

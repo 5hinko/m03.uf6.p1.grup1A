@@ -1,5 +1,6 @@
 package Vista;
 
+import Controlador.BotonInsertarMalaltia;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -105,6 +106,7 @@ public class NovaMalaltia extends JFrame {
 
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);
+        JBtnCrea.addActionListener(new BotonInsertarMalaltia());
 
         setLocationRelativeTo(null);
         pack();
