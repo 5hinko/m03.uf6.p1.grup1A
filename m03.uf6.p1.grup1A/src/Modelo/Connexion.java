@@ -9,13 +9,9 @@ import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +21,7 @@ import java.util.logging.Logger;
  */
 public class Connexion {
 
+    ///asfsdfsd
     private static final String DRIVER_CLASS_NAME;
     private static final String DRIVER_URL;
     private static final String USER;
