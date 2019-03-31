@@ -125,8 +125,8 @@ public class ProcedimientosPersona {
             } catch (SQLException ex) {
                 Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
         }
+            return false;
 
     }
 }
