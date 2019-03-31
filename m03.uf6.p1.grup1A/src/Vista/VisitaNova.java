@@ -5,8 +5,10 @@ import Controlador.BotonVisitaNovaCrea;
 import Modelo.Connexion;
 import Modelo.EnumTablas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -173,16 +175,28 @@ public class VisitaNova extends JFrame {
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);
 
-        setLocationRelativeTo(null);
-        pack();
-        setVisible(true);
+        //pack();
+        setSize(700, 400);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     private void ActionToListener() {
 
-        RellenarComboMalaltia();
-        RellenarComboMetge();
-        RellenarComboPacient();
+        try {
+            con = Connexion.getConnectionAdmin();
+            RellenarComboMalaltia();
+            RellenarComboMetge();
+            RellenarComboPacient();
+        } catch (SQLException ex) {
+            Logger.getLogger(VisitaNova.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(VisitaNova.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         jComboCercaMalaltia.addActionListener(new ComboBoxVisitaNova());
         jComboCercaMetge.addActionListener(new ComboBoxVisitaNova());

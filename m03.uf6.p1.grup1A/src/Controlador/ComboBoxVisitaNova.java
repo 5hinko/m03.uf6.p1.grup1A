@@ -34,6 +34,7 @@ public class ComboBoxVisitaNova implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        this.e = e;
         if (e.getSource() == JCBoxMonths) {
             String mes = (String) JCBoxMonths.getSelectedItem();
             switch (mes) {
@@ -74,12 +75,17 @@ public class ComboBoxVisitaNova implements ActionListener {
                     break;
             }
         } else {
+            ComboBoxVisitaNovaCercaDades();
+        }
+    }
+
+    private void ComboBoxVisitaNovaCercaDades() {
+        try {
+            con = Connexion.getConnection();
             if (e.getSource() == VisitaNova.jComboCercaMalaltia) {
                 sParaBuscar = VisitaNova.jComboCercaMalaltia.getSelectedItem().toString();
 
-                try {
-                    con = Connexion.getConnection();
-
+                if (!sParaBuscar.equals("")) {
                     sQuery = ("SELECT * FROM " + EnumTablas.Malalties + " WHERE codi = ? ");
 
                     statement = con.prepareStatement(sQuery);
@@ -88,27 +94,16 @@ public class ComboBoxVisitaNova implements ActionListener {
 
                     statement.executeQuery();
                     resultat = statement.getResultSet();
-
+                    
                     while (resultat.next()) {
                         VisitaNova.jLblInformacionMalaltia.setText(resultat.getString("nom"));
-                    }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        con.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ComboBoxVisitaNova.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
             } else if (e.getSource() == VisitaNova.jComboCercaMetge) {
                 sParaBuscar = VisitaNova.jComboCercaMetge.getSelectedItem().toString();
 
-                try {
-                    con = Connexion.getConnection();
-
+                if (!sParaBuscar.equals("")) {
                     sQuery = ("SELECT * FROM " + EnumTablas.Metges + " WHERE DNI LIKE ? ");
 
                     statement = con.prepareStatement(sQuery);
@@ -121,21 +116,12 @@ public class ComboBoxVisitaNova implements ActionListener {
                     while (resultat.next()) {
                         VisitaNova.jLblInformacionMetge.setText(resultat.getString("nom") + " " + resultat.getString("cognom1") + " " + resultat.getString("cognom2"));
                     }
-                } catch (SQLException ex) {
-                    Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        con.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ComboBoxVisitaNova.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 }
 
             } else if (e.getSource() == VisitaNova.jComboCercaPacient) {
                 sParaBuscar = VisitaNova.jComboCercaPacient.getSelectedItem().toString();
-                try {
-                    con = Connexion.getConnection();
 
+                if (!sParaBuscar.equals("")) {
                     sQuery = ("SELECT * FROM " + EnumTablas.Pacients + " WHERE DNI LIKE ? ");
 
                     statement = con.prepareStatement(sQuery);
@@ -148,15 +134,16 @@ public class ComboBoxVisitaNova implements ActionListener {
                     while (resultat.next()) {
                         VisitaNova.jLblInformacionPacient.setText(resultat.getString("nom") + " " + resultat.getString("cognom1") + " " + resultat.getString("cognom2"));
                     }
-                } catch (SQLException ex) {
-                    Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        con.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ComboBoxVisitaNova.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 }
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ComboBoxVisitaNova.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
