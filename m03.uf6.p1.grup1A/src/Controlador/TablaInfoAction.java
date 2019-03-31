@@ -47,7 +47,7 @@ public class TablaInfoAction implements TableModelListener {
             sentencia.executeUpdate();
             commited = true;
         } catch (SQLException ex) {
-                Logger.getLogger(TablaInfoAction.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TablaInfoAction.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (con != null) {
@@ -72,10 +72,22 @@ public class TablaInfoAction implements TableModelListener {
                 consulta += " SET nom = ?, causaBaixa = ?, tratamiento = ?, duradaTratamentDies = ? WHERE codi = ?";
                 sentencia = con.prepareStatement(consulta);
                 sentencia.setString(1, (String) (dades.getValueAt(fila, 1)));
-                sentencia.setInt(2, Integer.parseInt(dades.getValueAt(fila, 2).toString()));
+                try {
+                    sentencia.setInt(2, Integer.parseInt(dades.getValueAt(fila, 2).toString()));
+                } catch (NumberFormatException ex) {
+                    sentencia.setInt(2, 0);
+                }
                 sentencia.setString(3, (String) (dades.getValueAt(fila, 3)));
-                sentencia.setInt(4, Integer.parseInt(dades.getValueAt(fila, 4).toString()));
-                sentencia.setInt(5, Integer.parseInt(dades.getValueAt(fila, 0).toString()));
+                try {
+                    sentencia.setInt(4, Integer.parseInt(dades.getValueAt(fila, 4).toString()));
+                } catch (NumberFormatException ex) {
+                    sentencia.setInt(4, 0);
+                }
+                try {
+                    sentencia.setInt(5, Integer.parseInt(dades.getValueAt(fila, 0).toString()));
+                } catch (NumberFormatException ex) {
+                    sentencia.setInt(5, 0);
+                }
                 break;
             case Visita:
                 consulta += " SET nomMalaltia = ?, dniMetges = ? , informe = ? WHERE dataVisita = ? AND dniPacient = ?";
@@ -111,7 +123,11 @@ public class TablaInfoAction implements TableModelListener {
                 sentencia.setString(7, (String) (dades.getValueAt(fila, 7)));
                 sentencia.setString(8, (String) (dades.getValueAt(fila, 8)));
                 sentencia.setString(9, (String) (dades.getValueAt(fila, 9)));
-                sentencia.setInt(10, Integer.parseInt(dades.getValueAt(fila, 10).toString()));
+                try {
+                    sentencia.setInt(10, Integer.parseInt(dades.getValueAt(fila, 10).toString()));
+                } catch (NumberFormatException ex) {
+                    sentencia.setInt(10, 0);
+                }
                 sentencia.setString(11, (String) (dades.getValueAt(fila, 3)));
 
                 break;
