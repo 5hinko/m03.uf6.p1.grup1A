@@ -81,7 +81,7 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
                             ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
                             //JFwindow.dispose();
                         } else {
-                            ErrorInsert.infoBox("No se han podido introducir lso datos", "Error inesperado");
+                            ErrorInsert.infoBox("No se han podido introducir los datos", "Error inesperado");
                             //JFwindow.dispose();
                         }
                     }
@@ -99,7 +99,6 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
     public String comprobaciones(String[] data) {
         //DNI
         String error = "";
-        //Quitar la comprbacion de que esten vacios
         error += ComprobacionesPersona.corresponAlfabet(data[0], "nom");
         error += ComprobacionesPersona.corresponAlfabet(data[1], "apellido");
         error += ComprobacionesPersona.corresponAlfabet(data[2], "segundo apellido");
