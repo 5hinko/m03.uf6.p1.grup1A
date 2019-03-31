@@ -81,7 +81,7 @@ public class ComboBoxVisitaNova implements ActionListener {
 
     private void ComboBoxVisitaNovaCercaDades() {
         try {
-            con = Connexion.getConnection();
+            con = Connexion.getConnectionAdmin();
             if (e.getSource() == VisitaNova.jComboCercaMalaltia) {
                 sParaBuscar = VisitaNova.jComboCercaMalaltia.getSelectedItem().toString();
 
