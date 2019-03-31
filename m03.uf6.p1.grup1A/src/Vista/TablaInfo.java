@@ -196,6 +196,7 @@ public class TablaInfo extends JFrame {
         jCombo.setSelectedItem(EnumTablas.getEnum(itemCheck));
 
         selectAllInTablaRefresh();
+        jTxtFieldBusca.setText("");
     }
 
     public static void selectAllInTablaRefresh() {
