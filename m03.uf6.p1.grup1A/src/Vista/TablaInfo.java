@@ -195,10 +195,10 @@ public class TablaInfo extends JFrame {
         }
         jCombo.setSelectedItem(EnumTablas.getEnum(itemCheck));
 
-        selectAllInTabla();
+        selectAllInTablaRefresh();
     }
 
-    public static void selectAllInTabla() {
+    public static void selectAllInTablaRefresh() {
         try {
 
             ResultSet resultat = null;

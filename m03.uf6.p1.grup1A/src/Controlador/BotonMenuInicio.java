@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import Modelo.EnumTablas;
 import static Vista.MenuInici.jBtnMalalties;
 import static Vista.MenuInici.jBtnMetges;
 import static Vista.MenuInici.jBtnPacients;
@@ -23,13 +24,13 @@ public class BotonMenuInicio implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         TablaInfo frame = new TablaInfo(0);
         if (e.getSource() == jBtnMalalties) {
-            frame = new TablaInfo(3);
+            frame = new TablaInfo(EnumTablas.Malalties.getNum());
         } else if (e.getSource() == jBtnMetges) {
-            frame = new TablaInfo(0);
+            frame = new TablaInfo(EnumTablas.Metges.getNum());
         } else if (e.getSource() == jBtnPacients) {
-            frame = new TablaInfo(1);
+            frame = new TablaInfo(EnumTablas.Pacients.getNum());
         } else if (e.getSource() == jBtnVisitas) {
-            frame = new TablaInfo(2);
+            frame = new TablaInfo(EnumTablas.Visita.getNum());
         }
         frame.setVisible(true);
     }
