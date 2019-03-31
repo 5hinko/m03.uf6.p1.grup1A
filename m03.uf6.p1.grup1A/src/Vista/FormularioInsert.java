@@ -21,9 +21,9 @@ import Modelo.EnumTablas;
 
 public class FormularioInsert extends JFrame {
 
-    private JFrame JFwindow;
+    public static JFrame JFwindow;
     private GridBagConstraints c;
-    private JPanel jPrincipal;
+    public static JPanel jPrincipal;
     private JPanel JPcontent;
 
     public static JButton JBtnCrea;
@@ -159,6 +159,7 @@ public class FormularioInsert extends JFrame {
 
         jBtnCancelar = new JButton("Cancelar");
         boto.add(jBtnCancelar);
+        jBtnCancelar.addActionListener(new BotonesCrearPersona(clase));
 
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);
@@ -170,13 +171,6 @@ public class FormularioInsert extends JFrame {
     }
 
     private void metge() {
-        JPanel numEmpleat = new JPanel();
-        JPcontent.add(numEmpleat);
-        numEmpleat.add(new JLabel("Num empleat:   "));
-        JTxtFldNumEmpleat = new JTextField(23);
-        JTxtFldNumEmpleat.addComponentListener(null);
-        numEmpleat.add(JTxtFldNumEmpleat);
-
         JPanel compteCorrent = new JPanel();
         JPcontent.add(compteCorrent);
         compteCorrent.add(new JLabel("Compte corrent:  "));

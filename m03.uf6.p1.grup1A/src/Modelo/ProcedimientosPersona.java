@@ -51,19 +51,36 @@ public class ProcedimientosPersona {
 
     public static void main(String[] args) {
     }
+
     //Hacer un if data para saber si es medico o paciente.
     public static boolean insertarPaciente(String[] data) throws SQLException {
 
         conn = ConnexionUser.getConnection();
-
-        CallableStatement statement = conn.prepareCall("{?=call introducir_paciente(?,?,?,?,?,?,?,?,?)}");
-        statement.registerOutParameter(1, Types.INTEGER);
-        statement.setString(2, data[0]);
-        for (int i = 0; i < data.length; i++) {
-            statement.setString(i + 2, data[i]);
+        if (data.length == 9) {
+            CallableStatement statement = conn.prepareCall("{?=call introducir_paciente(?,?,?,?,?,?,?,?,?)}");
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.setString(2, data[0]);
+            for (int i = 0; i < data.length; i++) {
+                statement.setString(i + 2, data[i]);
+            }
+            statement.execute();
+            int numero = statement.getInt(1);
+            return numero > 0;
+        } else {
+            CallableStatement statement = conn.prepareCall("{?=call introducir_medico(?,?,?,?,?,?,?,?,?,?,?)}");
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.setString(2, data[0]);
+            for (int i = 0; i < data.length; i++) {
+                if (i == 11) {
+                    statement.setInt(i+2, Integer.parseInt(data[i]));
+                } else {
+                    statement.setString(i + 2, data[i]);
+                }
+            }
+            statement.execute();
+            int numero = statement.getInt(1);
+            return numero > 0;
         }
-        statement.execute();
-        int numero = statement.getInt(1);
-        return numero > 0;
+
     }
 }

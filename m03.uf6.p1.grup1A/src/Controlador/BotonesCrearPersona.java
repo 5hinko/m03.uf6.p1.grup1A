@@ -31,80 +31,68 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
     }
 
     @Override
-    public  void actionPerformed(ActionEvent ae) {
+    public void actionPerformed(ActionEvent ae) {
 
-        String[] data = null;
-        String errors = "";
-        boolean fallo = false;
-        try {
-            if (clase == 0) {
-                data = new String[15];
-                data[0] = JTxtFldNom.getText();
-                data[1] = JTxtFldPrimerCognom.getText();
-                data[2] = JTxtFldSegonCognom.getText();
-                data[3] = JTxtFldNIF.getText();
-                data[4] = JTxtFldNumeroSS.getText();
-                data[5] = JTxtFldTelf.getText();
-                data[6] = JTxtFldCiutat.getText();
-                data[7] = JTxtFldCodiPostal.getText();
-                data[8] = JTxtFldCarrer.getText();
-                data[9] = JTxtFldNumEmpleat.getText();
-                data[10] = JTxtFldCompteCorrent.getText();
-                data[11] = JTxtFldSalariMensual.getText();
-            } else if (clase == 1) {
-                data = new String[9];
-                data[0] = JTxtFldNom.getText();
-                data[1] = JTxtFldPrimerCognom.getText();
-                data[2] = JTxtFldSegonCognom.getText();
-                data[3] = JTxtFldNIF.getText();
-                data[4] = JTxtFldNumeroSS.getText();
-                data[5] = JTxtFldTelf.getText();
-                data[6] = JTxtFldCiutat.getText();
-                data[7] = JTxtFldCodiPostal.getText();
-                data[8] = JTxtFldCarrer.getText();
-            }
+        if (ae.getSource() == JBtnCrea) {
 
-            //Un metodo para mirar en la base de datos si la clase primaria ya existe.
-            errors += comprobaciones(data);
-
-        } catch (NullPointerException e) {
-            errors = "Los campos no pueden estar vacios.";
-        }
-
-        if (errors.length() > 0) {
-            ErrorInsert.infoBox(errors, "Error");
-        }
-
-        try {
-            /* if (fallo||errors != null) {
-            ErrorInsert.infoBox(errors, "Error");
-            } else {
-            
-            ErrorInsert.infoBox("muy bien", "Bien");
-            }
-             */
-            if (ProcedimientosPersona.existePaciente(data[3])) {
-                ErrorInsert.infoBox("Ya existe un paciente/medico con ese DNI", "Error");
-                /*
-            } else if (ProcedimientosPersona.existeSS(data[4])) {
-                ErrorInsert.infoBox("Ya existe un paciente/medico con ese numero de SS", "Error");
-                 */
-            } else {
-                ProcedimientosPersona.insertarPaciente(data);
-            }
-
-            /*
+            String[] data = null;
+            String errors = "";
+            boolean fallo = false;
             try {
-            GestioHospital.controladorCreaPersona(data, mode);
+                if (clase == 0) {
+                    data = new String[11];
+                    data[0] = JTxtFldNom.getText();
+                    data[1] = JTxtFldPrimerCognom.getText();
+                    data[2] = JTxtFldSegonCognom.getText();
+                    data[3] = JTxtFldNIF.getText();
+                    data[4] = JTxtFldNumeroSS.getText();
+                    data[5] = JTxtFldTelf.getText();
+                    data[6] = JTxtFldCiutat.getText();
+                    data[7] = JTxtFldCodiPostal.getText();
+                    data[8] = JTxtFldCarrer.getText();
+                    data[9] = JTxtFldCompteCorrent.getText();
+                    data[10] = JTxtFldSalariMensual.getText();
+                } else if (clase == 1) {
+                    data = new String[9];
+                    data[0] = JTxtFldNom.getText();
+                    data[1] = JTxtFldPrimerCognom.getText();
+                    data[2] = JTxtFldSegonCognom.getText();
+                    data[3] = JTxtFldNIF.getText();
+                    data[4] = JTxtFldNumeroSS.getText();
+                    data[5] = JTxtFldTelf.getText();
+                    data[6] = JTxtFldCiutat.getText();
+                    data[7] = JTxtFldCodiPostal.getText();
+                    data[8] = JTxtFldCarrer.getText();
+                }
+                errors += comprobaciones(data);
 
-            new Mostra("CORRECTE", "La persona s'ha afegit correctament.");
-            JFwindow.dispose();
-            } catch (Exception e) {
-            new Mostra("ERROR", "No s'ha pogut afegir la persona per les següents raons:" + e.getMessage());
+            } catch (NullPointerException e) {
+                errors = "Los campos no pueden estar vacios.";
             }
-             */
-        } catch (SQLException ex) {
-            Logger.getLogger(BotonesCrearPersona.class.getName()).log(Level.SEVERE, null, ex);
+
+            if (errors.length() > 0) {
+                ErrorInsert.infoBox(errors, "Error");
+            } else {
+                try {
+                    if (ProcedimientosPersona.existePaciente(data[3])) {
+                        ErrorInsert.infoBox("Ya existe un paciente/medico con ese DNI", "Error");
+                    } else {
+                        if (ProcedimientosPersona.insertarPaciente(data)) {
+                            ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
+                            //JFwindow.dispose();
+                        } else {
+                            ErrorInsert.infoBox("No se han podido introducir lso datos", "Error inesperado");
+                            //JFwindow.dispose();
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(BotonesCrearPersona.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else if (ae.getSource() == jBtnCancelar) {
+            System.exit(0);
+         //JFwindow.dispose();
         }
     }
 
