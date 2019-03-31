@@ -51,4 +51,7 @@ public class Connexion {
         return DriverManager.getConnection(DRIVER_URL, USER, PASSWORD);
     }
 
+    public static Connection getConnectionAdmin() throws SQLException {
+        return DriverManager.getConnection(DRIVER_URL, USER, PASSWORD);
+    }
 }

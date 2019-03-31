@@ -53,7 +53,7 @@ public class BotonBuscar implements ActionListener {
                 Logger.getLogger(BotonBuscar.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            TablaInfo.selectAllInTabla();
+            TablaInfo.selectAllInTablaRefresh();
         }
     }
 

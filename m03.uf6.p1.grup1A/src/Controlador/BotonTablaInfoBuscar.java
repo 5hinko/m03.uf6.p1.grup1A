@@ -33,6 +33,7 @@ public class BotonTablaInfoBuscar implements ActionListener {
     private ResultSet resultat = null;
     private PreparedStatement statement = null;
     private String sQuery;
+    private String sBuscar;
 
     public BotonTablaInfoBuscar() {
     }
@@ -40,18 +41,17 @@ public class BotonTablaInfoBuscar implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        sQuery = jTxtFieldBusca.getText().toString();
-        if (sQuery.length() > 0) {
+        sBuscar = jTxtFieldBusca.getText().toString();
+        if (sBuscar.length() > 0) {
 
             try {
                 con = Connexion.getConnection();
-                resultat = selectQuery();
-                statement.executeUpdate();
+                resultat = selectQueryPreparedStatement();
                 TableModel model = new ModeloDeTablaSimple(resultat);
                 actualitzaTaula(jTablaInfo, model);
             } catch (SQLException ex) {
                 Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
-            }finally{
+            } finally {
                 try {
                     con.close();
                 } catch (SQLException ex) {
@@ -59,11 +59,11 @@ public class BotonTablaInfoBuscar implements ActionListener {
                 }
             }
         } else {
-            TablaInfo.selectAllInTabla();
+            TablaInfo.selectAllInTablaRefresh();
         }
     }
 
-    private ResultSet selectQuery() throws SQLException {
+    private ResultSet selectQueryPreparedStatement() throws SQLException {
         EnumTablas tablaEnum = EnumTablas.getEnum(itemCheck);
         switch (tablaEnum) {
             case Malalties:
@@ -77,17 +77,17 @@ public class BotonTablaInfoBuscar implements ActionListener {
                     } catch (Exception e) {
 
                     }
-                    statement.setString(2, "%" + sQuery + "%");
-                    statement.setString(3, "%" + sQuery + "%");
+                    statement.setString(2, "%" + sBuscar + "%");
+                    statement.setString(3, "%" + sBuscar + "%");
                     try {
-                        statement.setInt(4, Integer.parseInt(sQuery));
+                        statement.setInt(4, Integer.parseInt(sBuscar));
                     } catch (Exception e) {
 
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                break;
             case Visita:
                 sQuery = ("SELECT * FROM " + tablaEnum + " WHERE dataVisita LIKE ? OR "
                         + "nomMalaltia LIKE ? OR "
@@ -97,15 +97,15 @@ public class BotonTablaInfoBuscar implements ActionListener {
                 statement = con.prepareStatement(sQuery);
 
                 try {
-                    statement.setString(1, "%" + sQuery + "%");
-                    statement.setString(2, "%" + sQuery + "%");
-                    statement.setString(3, "%" + sQuery + "%");
-                    statement.setString(4, "%" + sQuery + "%");
+                    statement.setString(1, "%" + sBuscar + "%");
+                    statement.setString(2, "%" + sBuscar + "%");
+                    statement.setString(3, "%" + sBuscar + "%");
+                    statement.setString(4, "%" + sBuscar + "%");
 
                 } catch (SQLException ex) {
                     Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                break;
             default:
                 sQuery = ("SELECT * "
                         + " FROM " + tablaEnum + " WHERE nom LIKE ? OR "
@@ -117,19 +117,19 @@ public class BotonTablaInfoBuscar implements ActionListener {
                 statement = con.prepareStatement(sQuery);
 
                 try {
-                    statement.setString(1, "%" + sQuery + "%");
-                    statement.setString(2, "%" + sQuery + "%");
-                    statement.setString(3, "%" + sQuery + "%");
-                    statement.setString(4, "%" + sQuery + "%");
-                    statement.setString(5, "%" + sQuery + "%");
+                    statement.setString(1, "%" + sBuscar + "%");
+                    statement.setString(2, "%" + sBuscar + "%");
+                    statement.setString(3, "%" + sBuscar + "%");
+                    statement.setString(4, "%" + sBuscar + "%");
+                    statement.setString(5, "%" + sBuscar + "%");
 
                 } catch (SQLException ex) {
                     Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                break;
         }
         statement.executeQuery();
-        
+
         return statement.getResultSet();
     }
 }
