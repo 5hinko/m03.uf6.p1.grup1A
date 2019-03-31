@@ -38,7 +38,6 @@ public class FormularioInsert extends JFrame {
     public static JTextField JTxtFldCodiPostal;
     public static JTextField JTxtFldCiutat;
     public static JTextField JTxtFldCarrer;
-    public static JTextField JTxtFldNumero;
     public static JTextField JTxtFldPlanta;
     public static JTextField JTxtFldPorta;
 
@@ -137,18 +136,11 @@ public class FormularioInsert extends JFrame {
 
         JPanel carrer = new JPanel();
         JPcontent.add(carrer);
-        carrer.add(new JLabel("Carrer: "));
+        carrer.add(new JLabel("Direcció: "));
         JTxtFldCarrer = new JTextField(27);
         JTxtFldCarrer.addComponentListener(null);
         carrer.add(JTxtFldCarrer);
-
-        JPanel numero = new JPanel();
-        JPcontent.add(numero);
-        numero.add(new JLabel("Número:  "));
-        JTxtFldNumero = new JTextField(26);
-        JTxtFldNumero.addComponentListener(null);
-        numero.add(JTxtFldNumero);
-
+        
         if (clase == 0) {
             metge();
         }
