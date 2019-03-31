@@ -67,7 +67,7 @@ public class PorcedimientosMalaltia {
             } catch (SQLException ex) {
                 Logger.getLogger(PorcedimientosMalaltia.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
         }
+        return false;
     }
 }

@@ -40,20 +40,20 @@ public class BotonInsertarMalaltia extends MouseAdapter implements ActionListene
             try {
                 int a = Integer.parseInt(data[3]);
             } catch (NumberFormatException e) {
-                errors = "Num. Dies debe ser un Integer";
+                errors += "Num. Dies debe ser un Integer";
             }
 
             for (String string : data) {
                 if (string.length() == 0) {
-                    errors = "Los campos no pueden estar vacios!";
+                    errors += "Los campos no pueden estar vacios!";
                 }
             }
 
             if (PorcedimientosMalaltia.existeMalaltia(data[0])) {
-                errors = "Ya existe una enfermedad con ese nombre!";
+                errors += "Ya existe una enfermedad con ese nombre!";
             }
         } catch (NullPointerException e) {
-            errors = "Los campos no pueden estar vacios!";
+            errors += "Los campos no pueden estar vacios!";
         }
         if (errors.length() > 0) {
             ErrorInsert.infoBox(errors, "Error");

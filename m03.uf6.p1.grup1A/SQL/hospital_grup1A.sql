@@ -8,7 +8,8 @@ GRANT ALL PRIVILEGES ON hospital_grup1A.* TO 'admin_hospital_grup1A'@'localhost'
 DROP USER IF EXISTS 'usuari_hospital_grup1A'@'localhost';
 CREATE USER 'usuari_hospital_grup1A'@'localhost' IDENTIFIED BY 'usuari';
 GRANT SELECT ON hospital_grup1A.* TO 'usuari_hospital_grup1A'@'localhost';
-GRANT SELECT ON mysql.proc TO 'usuari_hospital_grup1A'@'localhost';
+#GRANT EXECUTE ON PROCEDURE hospital_grup1A.* TO 'usuari_hospital_grup1A'@'localhost';
+#GRANT SELECT ON mysql.proc TO 'usuari_hospital_grup1A'@'localhost';
 FLUSH PRIVILEGES;
 USE hospital_grup1A;
 
@@ -160,7 +161,14 @@ CREATE FUNCTION existeSS(SS CHAR(11)) RETURNS INT
 DELIMITER ;
 
 
-
+GRANT EXECUTE ON function hospital_grup1A.introducir_paciente TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.introducir_medico TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.introducir_malaltia TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.introducir_visita TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.existe_paciente TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.existe_medico TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.existe_malaltia TO 'usuari_hospital_grup1A'@'localhost';
+GRANT EXECUTE ON function hospital_grup1A.existeSS TO 'usuari_hospital_grup1A'@'localhost';
 
 
 SELECT existe_paciente('1839456R');

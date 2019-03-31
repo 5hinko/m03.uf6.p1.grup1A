@@ -140,7 +140,7 @@ public class FormularioInsert extends JFrame {
         JTxtFldCarrer = new JTextField(27);
         JTxtFldCarrer.addComponentListener(null);
         carrer.add(JTxtFldCarrer);
-        
+
         if (clase == 0) {
             metge();
         }
@@ -152,14 +152,15 @@ public class FormularioInsert extends JFrame {
 //        jBtnCancelar = new JButton("Cancelar");
 //        boto.add(jBtnCancelar);
 //        jBtnCancelar.addActionListener(new BotonesCrearPersona(clase));
-
         JBtnCrea = new JButton("Crear");
         boto.add(JBtnCrea);
         JBtnCrea.addActionListener(new BotonesCrearPersona(clase));
 
         jPrincipal.add(JPcontent, BorderLayout.CENTER);
-        pack();
 
+        pack();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     private void metge() {

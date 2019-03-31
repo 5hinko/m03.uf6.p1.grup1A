@@ -30,7 +30,7 @@ public class MenuInici extends JFrame {
     MenuInici() {
 
         creaComponents();
-        accionListener();
+        accionListenerDeMenu();
     }
 
     private  JPanel jPrincipal;
@@ -134,7 +134,7 @@ public class MenuInici extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void accionListener() {
+    public void accionListenerDeMenu() {
         jBtnPacients.addActionListener(new BotonMenuInicio());
         jBtnMetges.addActionListener(new BotonMenuInicio());
         jBtnMalalties.addActionListener(new BotonMenuInicio());
