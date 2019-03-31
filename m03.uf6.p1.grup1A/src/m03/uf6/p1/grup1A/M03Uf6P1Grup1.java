@@ -10,6 +10,7 @@ import Modelo.ConnexionUser;
 import static Modelo.ProcedimientosPersona.conn;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Statement;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -31,6 +35,12 @@ public class M03Uf6P1Grup1 {
      */
     public static void main(String[] args) throws SQLException {
         Connection conn = Connexion.getConnection();
+        
+        
+        DateFormat bien = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date fecha = new Date();
+        System.out.println(bien.format(fecha));
+        
          /*
 
 Statement sentencia = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
