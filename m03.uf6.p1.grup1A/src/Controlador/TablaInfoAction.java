@@ -69,7 +69,7 @@ public class TablaInfoAction implements TableModelListener {
         String consulta = "UPDATE " + tablaEnum;
         switch (tablaEnum) {
             case Malalties:
-                consulta += " SET nom LIKE ?, causaBaixa = ?, tratamiento LIKE ?, duradaTratamentDies = ? WHERE codi = ?";
+                consulta += " SET nom = ?, causaBaixa = ?, tratamiento = ?, duradaTratamentDies = ? WHERE codi = ?";
                 sentencia = con.prepareStatement(consulta);
                 sentencia.setString(1, (String) (dades.getValueAt(fila, 1)));
                 sentencia.setInt(2, Integer.parseInt(dades.getValueAt(fila, 2).toString()));
@@ -78,7 +78,7 @@ public class TablaInfoAction implements TableModelListener {
                 sentencia.setInt(5, Integer.parseInt(dades.getValueAt(fila, 0).toString()));
                 break;
             case Visita:
-                consulta += " SET nomMalaltia LIKE ?, dniMetges LIKE ? , informe LIKE ? WHERE dataVisita LIKE ? AND dniPacient LIKE ?";
+                consulta += " SET nomMalaltia = ?, dniMetges = ? , informe = ? WHERE dataVisita = ? AND dniPacient = ?";
                 sentencia = con.prepareStatement(consulta);
                 sentencia.setString(1, (String) (dades.getValueAt(fila, 1)));
                 sentencia.setString(2, (String) (dades.getValueAt(fila, 3)));
@@ -87,7 +87,7 @@ public class TablaInfoAction implements TableModelListener {
                 sentencia.setString(5, (String) (dades.getValueAt(fila, 2)));
                 break;
             case Pacients:
-                consulta += " SET nom LIKE ?, cognom1 LIKE ?, cognom2 LIKE ?, numSS LIKE ?, telefon LIKE ? , ciutat LIKE ?, codipostal = ?, direccio LIKE ? WHERE DNI LIKE ?";
+                consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ? , ciutat = ?, codipostal = ?, direccio = ? WHERE DNI = ?";
                 sentencia = con.prepareStatement(consulta);
                 sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
                 sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
@@ -100,7 +100,7 @@ public class TablaInfoAction implements TableModelListener {
                 sentencia.setString(9, (String) (dades.getValueAt(fila, 3)));
                 break;
             case Metges:
-                consulta += " SET nom LIKE ?, cognom1 LIKE ?, cognom2 LIKE ?, numSS LIKE ?, telefon LIKE ?, ciutat LIKE ?, codipostal = ?, direccio LIKE ?, codiCC LIKE ?, salariMensual = ? WHERE DNI LIKE ?";
+                consulta += " SET nom = ?, cognom1 = ?, cognom2 = ?, numSS = ?, telefon = ?, ciutat = ?, codipostal = ?, direccio = ?, codiCC = ?, salariMensual = ? WHERE DNI = ?";
                 sentencia = con.prepareStatement(consulta);
                 sentencia.setString(1, (String) (dades.getValueAt(fila, 0)));
                 sentencia.setString(2, (String) (dades.getValueAt(fila, 1)));
