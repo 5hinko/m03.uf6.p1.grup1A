@@ -39,7 +39,7 @@ public class BotonInsertarMalaltia extends MouseAdapter implements ActionListene
 
             try {
                 int a = Integer.parseInt(data[3]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 errors = "Num. Dies debe ser un Integer";
             }
 
@@ -51,17 +51,13 @@ public class BotonInsertarMalaltia extends MouseAdapter implements ActionListene
 
             if (PorcedimientosMalaltia.existeMalaltia(data[0])) {
                 errors = "Ya existe una enfermedad con ese nombre!";
-            } else {
             }
         } catch (NullPointerException e) {
             errors = "Los campos no pueden estar vacios!";
-        } catch (SQLException ex) {
-            Logger.getLogger(BotonInsertarMalaltia.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (errors.length() > 0) {
             ErrorInsert.infoBox(errors, "Error");
         } else {
-            try {
                 if (PorcedimientosMalaltia.insertarMalaltia(data)) {
                     ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
                     limpiar();
@@ -69,9 +65,6 @@ public class BotonInsertarMalaltia extends MouseAdapter implements ActionListene
                 } else {
                     ErrorInsert.infoBox("No se han podido introducir los datos", "Error inesperado");
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(BotonInsertarMalaltia.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 

@@ -44,13 +44,19 @@ public class BotonBuscar implements ActionListener {
         if (sQuery.length() > 0) {
 
             try {
-                con = Connexion.getConnection();
+                con = Connexion.getConnectionAdmin();
                 resultat = selectQuery();
                 statement.executeUpdate();
                 TableModel model = new ModeloDeTablaSimple(resultat);
                 actualitzaTaula(jTablaInfo, model);
             } catch (SQLException ex) {
                 Logger.getLogger(BotonBuscar.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BotonBuscar.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else {
             TablaInfo.selectAllInTablaRefresh();
@@ -68,15 +74,15 @@ public class BotonBuscar implements ActionListener {
                 try {
                     try {
                         statement.setInt(1, Integer.parseInt(sQuery));
-                    } catch (Exception e) {
-
+                    } catch (NumberFormatException e) {
+                        statement.setInt(1, -1);
                     }
                     statement.setString(2, "%" + sQuery + "%");
                     statement.setString(3, "%" + sQuery + "%");
                     try {
                         statement.setInt(4, Integer.parseInt(sQuery));
-                    } catch (Exception e) {
-
+                    } catch (NumberFormatException e) {
+                        statement.setInt(4, -1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(BotonBuscar.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,7 +129,7 @@ public class BotonBuscar implements ActionListener {
 
         }
         statement.executeQuery();
-        
+
         return statement.getResultSet();
     }
 }

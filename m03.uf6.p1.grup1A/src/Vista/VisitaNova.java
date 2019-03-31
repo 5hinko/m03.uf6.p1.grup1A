@@ -212,7 +212,7 @@ public class VisitaNova extends JFrame {
 
     private void RellenarComboMalaltia() {
         try {
-            con = Connexion.getConnection();
+            con = Connexion.getConnectionAdmin();
 
             sQuery = ("SELECT * FROM " + EnumTablas.Malalties);
 
@@ -239,7 +239,7 @@ public class VisitaNova extends JFrame {
 
     private void RellenarComboMetge() {
         try {
-            con = Connexion.getConnection();
+            con = Connexion.getConnectionAdmin();
 
             sQuery = ("SELECT * FROM " + EnumTablas.Metges);
 
@@ -266,7 +266,7 @@ public class VisitaNova extends JFrame {
 
     private void RellenarComboPacient() {
         try {
-            con = Connexion.getConnection();
+            con = Connexion.getConnectionAdmin();
 
             sQuery = ("SELECT * FROM " + EnumTablas.Pacients);
 

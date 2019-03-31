@@ -45,7 +45,7 @@ public class BotonTablaInfoBuscar implements ActionListener {
         if (sBuscar.length() > 0) {
 
             try {
-                con = Connexion.getConnection();
+                con = Connexion.getConnectionAdmin();
                 resultat = selectQueryPreparedStatement();
                 TableModel model = new ModeloDeTablaSimple(resultat);
                 actualitzaTaula(jTablaInfo, model);

@@ -22,18 +22,18 @@ import java.util.logging.Logger;
  * @author Lorenzo
  */
 public class BotonesCrearPersona extends MouseAdapter implements ActionListener {
-    
+
     int clase;
-    
+
     public BotonesCrearPersona(int clase) {
         this.clase = clase;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent ae) {
-        
+
         if (ae.getSource() == JBtnCrea) {
-            
+
             String[] data = null;
             String errors = "";
             boolean fallo = false;
@@ -64,36 +64,31 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
                     data[8] = JTxtFldCarrer.getText();
                 }
                 errors += comprobaciones(data);
-                
+
             } catch (NullPointerException e) {
                 errors = "Los campos no pueden estar vacios.";
             }
-            
+
             if (errors.length() > 0) {
                 ErrorInsert.infoBox(errors, "Error");
             } else {
-                try {
-                    if (ProcedimientosPersona.existePaciente(data[3])) {
-                        ErrorInsert.infoBox("Ya existe un paciente/medico con ese DNI", "Error");
+                if (ProcedimientosPersona.existePaciente(data[3])) {
+                    ErrorInsert.infoBox("Ya existe un paciente/medico con ese DNI", "Error");
+                } else {
+                    if (ProcedimientosPersona.insertarPaciente(data)) {
+                        ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
+                        limpiartexto();
+                        selectAllInTablaRefresh();
+                        //JFwindow.dispose();
                     } else {
-                        if (ProcedimientosPersona.insertarPaciente(data)) {
-                            ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
-                            limpiartexto();
-                            selectAllInTablaRefresh();
-                            //JFwindow.dispose();
-                        } else {
-                            ErrorInsert.infoBox("No se han podido introducir los datos", "Error inesperado");
-                            //JFwindow.dispose();
-                        }
+                        ErrorInsert.infoBox("No se han podido introducir los datos", "Error inesperado");
+                        //JFwindow.dispose();
                     }
-                    
-                } catch (SQLException ex) {
-                    Logger.getLogger(BotonesCrearPersona.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }
-    
+
     public String comprobaciones(String[] data) {
         //DNI
         String error = "";
@@ -103,7 +98,7 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
         error += ComprobacionesPersona.comprovaNif(data[3]);
         error += ComprobacionesPersona.comprovaNumSegSocial(data[4]);
         error += ComprobacionesPersona.comprovaTelf(data[5]);
-        
+
         data = new String[12];
         data[0] = JTxtFldNom.getText();
         data[1] = JTxtFldPrimerCognom.getText();
@@ -114,10 +109,10 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
         data[6] = JTxtFldCiutat.getText();
         data[7] = JTxtFldCodiPostal.getText();
         data[8] = JTxtFldCarrer.getText();
-        
+
         return error;
     }
-    
+
     public void limpiartexto() {
         JTxtFldNom.setText("");
         JTxtFldPrimerCognom.setText("");
@@ -131,8 +126,8 @@ public class BotonesCrearPersona extends MouseAdapter implements ActionListener 
         if (data.length > 10) {
             JTxtFldCompteCorrent.setText("");
             JTxtFldSalariMensual.setText("");
-            
+
         }
-        
+
     }
 }

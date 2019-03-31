@@ -206,7 +206,7 @@ public class TablaInfo extends JFrame {
             PreparedStatement statement = null;
             Connection con = null;
 
-            con = Connexion.getConnection();
+            con = Connexion.getConnectionAdmin();
             //Reset Select ALL
             String sQuery = "SELECT * "
                     + " FROM " + EnumTablas.getEnum(itemCheck);

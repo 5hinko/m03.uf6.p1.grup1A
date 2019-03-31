@@ -65,7 +65,7 @@ public class BotonVisitaNovaCrea implements ActionListener {
                 Integer.parseInt(JTxtFldHour.getText().toString());
                 Integer.parseInt(JTxtFldMin.getText().toString());
 
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 sErrorMostrar = "Introducció no vàlida.\n";
                 hayError = true;
             }
@@ -119,18 +119,11 @@ public class BotonVisitaNovaCrea implements ActionListener {
                 String fecha = (JTxtFldYear.getText() + "-" + seleccionado + "-" + JTxtFldDays.getText() + " " + JTxtFldHour.getText() + ":" + JTxtFldMin.getText() + ":00");
                 String[] data = {fecha, malaltia, paciente, medico, "sdasd"};
 
-                try {
-                    if (ProcedimientosVisita.crearVisita(data)) {
-                        ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
-                        selectAllInTablaRefresh();
-                    } else {
-                        ErrorInsert.infoBox("Ha ocurrido un error inesperado", "Error");
-                    }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(BotonVisitaNovaCrea.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ParseException ex) {
-                    Logger.getLogger(BotonVisitaNovaCrea.class.getName()).log(Level.SEVERE, null, ex);
+                if (ProcedimientosVisita.crearVisita(data)) {
+                    ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
+                    selectAllInTablaRefresh();
+                } else {
+                    ErrorInsert.infoBox("Ha ocurrido un error inesperado", "Error");
                 }
             }
 
