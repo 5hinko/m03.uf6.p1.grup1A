@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class Connexion {
 
-    ///as
+    ///asfsdfsd
     private static final String DRIVER_CLASS_NAME;
     private static final String DRIVER_URL;
     private static final String USER;
