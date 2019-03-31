@@ -290,16 +290,13 @@ public class VisitaNova extends JFrame {
             }
         }
     }
-
+/*
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                VisitaNova frame = new VisitaNova();
-                frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            VisitaNova frame = new VisitaNova();
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
     }
-
+*/
 }

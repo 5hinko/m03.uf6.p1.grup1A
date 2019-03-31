@@ -2,8 +2,10 @@ package Vista;
 
 import Controlador.BotonInsertarMalaltia;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -59,7 +61,7 @@ public class NovaMalaltia extends JFrame {
         JPtitle.setBackground(Color.LIGHT_GRAY);
         JPtitle.setBorder(new EmptyBorder(5, 5, 5, 5));
         c.gridy = 0;
-       add(JPtitle, c);
+        add(JPtitle, c);
 
         JPtitle.add(new JLabel("NOVA MALALTIA"));
 
@@ -98,7 +100,6 @@ public class NovaMalaltia extends JFrame {
         tractament.add(areaScrollPane);
 
         //CheckBox
-
         // Button.
         JPanel boto = new JPanel();
         boto.setBorder(new EmptyBorder(0, 0, 8, 0));
@@ -108,23 +109,22 @@ public class NovaMalaltia extends JFrame {
         boto.add(JBtnCrea);
         JBtnCrea.addActionListener(new BotonInsertarMalaltia());
 
-        setLocationRelativeTo(null);
         pack();
-        setVisible(true);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     private void ActionToListener() {/*
         JCkBoxCausaBaixa.addActionListener(new ButonsNovaMalaltia());
-        JBtnCrea.addActionListener(new ButonsNovaMalaltia());*/  
+        JBtnCrea.addActionListener(new ButonsNovaMalaltia());*/
     }
+    /*
         public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                NovaMalaltia frame = new NovaMalaltia();
-                frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            NovaMalaltia frame = new NovaMalaltia();
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
     }
+     */
 }

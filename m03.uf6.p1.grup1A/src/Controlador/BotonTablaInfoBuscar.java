@@ -73,16 +73,16 @@ public class BotonTablaInfoBuscar implements ActionListener {
 
                 try {
                     try {
-                        statement.setInt(1, Integer.parseInt(sQuery));
-                    } catch (Exception e) {
-
+                        statement.setInt(1, Integer.parseInt(sBuscar));
+                    } catch (NumberFormatException e) {
+                        statement.setInt(1, -1);
                     }
                     statement.setString(2, "%" + sBuscar + "%");
                     statement.setString(3, "%" + sBuscar + "%");
                     try {
                         statement.setInt(4, Integer.parseInt(sBuscar));
-                    } catch (Exception e) {
-
+                    } catch (NumberFormatException e) {
+                        statement.setInt(4, -1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(BotonTablaInfoBuscar.class.getName()).log(Level.SEVERE, null, ex);

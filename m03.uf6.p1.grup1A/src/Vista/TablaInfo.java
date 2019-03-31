@@ -222,7 +222,7 @@ public class TablaInfo extends JFrame {
             Logger.getLogger(TablaInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+/*
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             TablaInfo frame = new TablaInfo(1);
@@ -230,5 +230,5 @@ public class TablaInfo extends JFrame {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
     }
-
+*/
 }
