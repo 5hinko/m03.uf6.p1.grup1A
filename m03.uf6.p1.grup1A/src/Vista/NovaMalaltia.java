@@ -114,9 +114,8 @@ public class NovaMalaltia extends JFrame {
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
-    private void ActionToListener() {/*
-        JCkBoxCausaBaixa.addActionListener(new ButonsNovaMalaltia());
-        JBtnCrea.addActionListener(new ButonsNovaMalaltia());*/
+    private void ActionToListener() {
+        JBtnCrea.addActionListener(new BotonInsertarMalaltia());
     }
     /*
         public static void main(String[] args) {
