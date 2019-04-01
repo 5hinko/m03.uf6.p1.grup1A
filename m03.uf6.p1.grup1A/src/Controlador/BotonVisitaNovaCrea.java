@@ -119,11 +119,15 @@ public class BotonVisitaNovaCrea implements ActionListener {
                 String fecha = (JTxtFldYear.getText() + "-" + seleccionado + "-" + JTxtFldDays.getText() + " " + JTxtFldHour.getText() + ":" + JTxtFldMin.getText() + ":00");
                 String[] data = {fecha, malaltia, paciente, medico, "sdasd"};
 
-                if (ProcedimientosVisita.crearVisita(data)) {
-                    ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
-                    selectAllInTablaRefresh();
-                } else {
-                    ErrorInsert.infoBox("Ha ocurrido un error inesperado", "Error");
+                try {
+                    if (ProcedimientosVisita.crearVisita(data)) {
+                        ErrorInsert.infoBox("Datos insertados con Exito!", "Success");
+                        selectAllInTablaRefresh();
+                    } else {
+                        ErrorInsert.infoBox("Ha ocurrido un error inesperado", "Error");
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(BotonVisitaNovaCrea.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 

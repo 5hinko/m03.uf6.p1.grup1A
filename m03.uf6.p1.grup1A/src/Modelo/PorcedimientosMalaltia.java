@@ -21,14 +21,14 @@ public class PorcedimientosMalaltia {
     public static Connection conn = null;
 
     public static boolean existeMalaltia(String nombre) {
+        int numero = -1;
         try {
             conn = ConnexionUser.getConnection();
             CallableStatement statement = conn.prepareCall("{?=call existe_malaltia(?)}");
             statement.registerOutParameter(1, Types.INTEGER);
             statement.setString(2, nombre);
             statement.execute();
-            int numero = statement.getInt(1);
-            return numero > 0;
+            numero = statement.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(PorcedimientosMalaltia.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -37,12 +37,13 @@ public class PorcedimientosMalaltia {
             } catch (SQLException ex) {
                 Logger.getLogger(PorcedimientosMalaltia.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
         }
+        return numero > 0;
     }
 
     public static boolean insertarMalaltia(String[] data) {
 
+        int numero = -1;
         try {
             conn = ConnexionUser.getConnection();
             CallableStatement statement = conn.prepareCall("{?=call introducir_malaltia(?,?,?,?)}");
@@ -57,8 +58,8 @@ public class PorcedimientosMalaltia {
             statement.setInt(5, Integer.parseInt(data[3]));
 
             statement.execute();
-            int numero = statement.getInt(1);
-            return numero > 0;
+            
+            numero = statement.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(PorcedimientosMalaltia.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -68,6 +69,6 @@ public class PorcedimientosMalaltia {
                 Logger.getLogger(PorcedimientosMalaltia.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return false;
+        return numero > 0;
     }
 }

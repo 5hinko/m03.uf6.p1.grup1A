@@ -22,14 +22,15 @@ public class ProcedimientosPersona {
     public static Connection conn = null;
 
     public static boolean existePaciente(String DNI) {
+
+        int numero = -1;
         try {
             conn = ConnexionUser.getConnection();
             CallableStatement statement = conn.prepareCall("{?=call existe_paciente(?)}");
             statement.registerOutParameter(1, Types.INTEGER);
             statement.setString(2, DNI);
             statement.execute();
-            int numero = statement.getInt(1);
-            return numero > 0;
+            numero = statement.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -37,20 +38,22 @@ public class ProcedimientosPersona {
                 conn.close();
             } catch (SQLException ex) {
                 Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
+
             }
-            return false;
         }
+        return numero > 0;
     }
 
     public static boolean existeMedico(String DNI) {
+
+        int numero = -1;
         try {
             conn = ConnexionUser.getConnection();
             CallableStatement statement = conn.prepareCall("{?=call existe_medico(?)}");
             statement.registerOutParameter(1, Types.INTEGER);
             statement.setString(2, DNI);
             statement.execute();
-            int numero = statement.getInt(1);
-            return numero > 0;
+            numero = statement.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -59,19 +62,19 @@ public class ProcedimientosPersona {
             } catch (SQLException ex) {
                 Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
         }
+        return numero > 0;
     }
 
     public static boolean existeSS(String SS) {
+        int numero = -1;
         try {
             conn = ConnexionUser.getConnection();
             CallableStatement statement = conn.prepareCall("{?=call existeSS(?)}");
             statement.registerOutParameter(1, Types.INTEGER);
             statement.setString(2, SS);
             statement.execute();
-            int numero = statement.getInt(1);
-            return numero > 0;
+            numero = statement.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -81,7 +84,7 @@ public class ProcedimientosPersona {
                 Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            return false;
+        return numero > 0;
     }
 
     public static void main(String[] args) {
@@ -90,6 +93,7 @@ public class ProcedimientosPersona {
     //Hacer un if data para saber si es medico o paciente.
     public static boolean insertarPaciente(String[] data) {
 
+        int numero = -1;
         try {
             conn = ConnexionUser.getConnection();
             if (data.length == 9) {
@@ -100,8 +104,7 @@ public class ProcedimientosPersona {
                     statement.setString(i + 2, data[i]);
                 }
                 statement.execute();
-                int numero = statement.getInt(1);
-                return numero > 0;
+                numero = statement.getInt(1);
             } else {
                 CallableStatement statement = conn.prepareCall("{?=call introducir_medico(?,?,?,?,?,?,?,?,?,?,?)}");
                 statement.registerOutParameter(1, Types.INTEGER);
@@ -114,8 +117,7 @@ public class ProcedimientosPersona {
                     }
                 }
                 statement.execute();
-                int numero = statement.getInt(1);
-                return numero > 0;
+                numero = statement.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,7 +128,7 @@ public class ProcedimientosPersona {
                 Logger.getLogger(ProcedimientosPersona.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            return false;
+        return numero > 0;
 
     }
 }
