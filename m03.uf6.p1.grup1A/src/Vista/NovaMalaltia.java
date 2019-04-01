@@ -115,7 +115,7 @@ public class NovaMalaltia extends JFrame {
     }
 
     private void ActionToListener() {
-        JBtnCrea.addActionListener(new BotonInsertarMalaltia());
+        //JBtnCrea.addActionListener(new BotonInsertarMalaltia());
     }
     /*
         public static void main(String[] args) {
